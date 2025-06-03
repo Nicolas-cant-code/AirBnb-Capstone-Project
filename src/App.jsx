@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import HomePage from "./Components/Pages/Home";
 
 function App() {
   return (
-    <>
-      <h1>AirBnB Clone</h1>
-    </>
+    <div className="app">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
