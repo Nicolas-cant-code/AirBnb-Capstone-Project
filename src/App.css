@@ -1,0 +1,43 @@
+.logo {
+  height: 32px;
+}
+
+.text-light-grey {
+  color: #b8b8b8 !important;
+}
+
+.rounded-50 {
+  border-radius: 50px !important;
+}
+
+.outline-none {
+  outline: none !important;
+}
+
+.px-6 {
+  padding: 0 5rem !important;
+}
+
+.pt-6 {
+  padding-top: 5rem !important;
+}
+
+.px-7 {
+  padding: 0 10rem !important;
+}
+
+.hover-link {
+  cursor: pointer;
+}
+
+.hover-link:hover {
+  text-decoration: underline;
+}
+
+.justify-self-center {
+  justify-self: center;
+}
+
+.fs-7 {
+  font-size: 0.8rem;
+}
