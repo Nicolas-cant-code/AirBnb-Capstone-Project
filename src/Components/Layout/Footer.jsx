@@ -9,7 +9,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 const Footer = ({ padding }) => {
   return (
     <div className={padding + " bg-light pb-4"}>
-      <div className="d-flex justify-content-between pb-5 pt-6 border-bottom">
+      <div className="flex justify-content-between pb-5 pt-6 border-bottom gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <section>
           <HeadingTag title={"Support"} />
           <ul className="d-flex flex-column gap-3 ps-0 pt-2">
@@ -52,7 +52,7 @@ const Footer = ({ padding }) => {
           </ul>
         </section>
       </div>
-      <div className="d-flex justify-content-between pt-4">
+      <div className="flex flex-col lg:flex-row justify-content-between pt-4">
         <div>
           <span>© 2025 Airbnb, Inc. • Privacy • Terms • Sitemap</span>
         </div>

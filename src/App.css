@@ -1,5 +1,21 @@
+@import "tailwindcss";
+
 .logo {
   height: 32px;
+}
+.text-large {
+  font-size: 5rem !important;
+}
+
+.borders {
+  border-bottom: 2px solid rgba(114, 114, 114, 0.3) !important;
+  span {
+    padding-bottom: 1.25rem;
+  }
+}
+
+.icon-hover:hover {
+  fill: rgb(65, 183, 219) !important;
 }
 
 .text-light-grey {
@@ -40,4 +56,13 @@
 
 .fs-7 {
   font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .px-6 {
+    padding: 0 1rem !important;
+  }
+  .px-7 {
+    padding: 0 1rem !important;
+  }
 }
