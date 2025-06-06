@@ -58,6 +58,14 @@
   font-size: 0.8rem;
 }
 
+img {
+  border-radius: 0.75rem;
+}
+
+p {
+  margin-bottom: 0px !important;
+}
+
 @media (max-width: 768px) {
   .px-6 {
     padding: 0 1rem !important;

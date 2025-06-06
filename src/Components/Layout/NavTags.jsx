@@ -9,7 +9,7 @@ const NavTags = () => {
         <Button slot={"Type of place"} type={"dropdown"} />
       </div>
       <div className="pl-4 lg:pl-8 flex space-x-2 lg:space-x-3 justify-between xl:justify-content-start">
-        <span className="space-x-2 lg:space-x-3 justify-content-center xl:w-fit hidden md:flex">
+        <span className="space-x-2 lg:space-x-3 justify-content-center xl:w-fit hidden md:flex mr-3 lg:mr-45">
           <Button slot={"Wifi"} />
           <Button slot={"Iron"} />
           <Button slot={"Dryer"} />
