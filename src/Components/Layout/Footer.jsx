@@ -87,7 +87,7 @@ const Footer = ({ padding }) => {
                 <div ariaLabelledby="dropdownMenuButton">
                   <option className="dropdown-item">R RND</option>
                   <option className="dropdown-item">$ USD</option>
-                  <option className="dropdown-item">E EUR</option>
+                  <option className="dropdown-item">€ EUR</option>
                 </div>
               </select>
             </div>
