@@ -14,7 +14,7 @@ const PaymentCard = ({
   description,
 }) => {
   return (
-    <div>
+    <div className="mb-4">
       <div className="p-4 shadow-xl/25 rounded-3 min-w-[370px]">
         <div className="flex justify-between mb-3">
           <span>

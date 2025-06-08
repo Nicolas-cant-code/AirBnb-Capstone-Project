@@ -1,8 +1,10 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-100 lg:w-75 d-flex justify-self-center pb-5">
       <div className="d-flex flex-coloumn align-items-center justify-content-between bg-white text-dark py-1 px-3 rounded-50 w-100">
@@ -36,6 +38,7 @@ const Search = () => {
           <SearchIcon
             style={{ boxSizing: "content-box" }}
             className="cursor-pointer bg-danger rounded-circle p-3 text-white"
+            onClick={() => navigate("/search")}
           />
         </div>
       </div>

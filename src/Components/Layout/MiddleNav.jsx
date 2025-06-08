@@ -1,12 +1,14 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 const MiddleNav = ({ type }) => {
+  const navigate = useNavigate();
   return (
     <div>
       {type === "home" ? (
         <div
-          className="flex gap-2 md:gap-4"
+          className="flex space-x-2 lg:space-x-8"
           style={{ marginBottom: "-0.5rem" }}
         >
           <div className="flex-column align-items-center flex">
@@ -17,7 +19,7 @@ const MiddleNav = ({ type }) => {
             <span style={{ marginBottom: "-1rem" }}>Experiences</span>
             <span className="d-none">__</span>
           </div>
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <span style={{ marginBottom: "-1rem" }}>Online Experiences</span>
             <span className="d-none">__</span>
           </div>
@@ -49,6 +51,7 @@ const MiddleNav = ({ type }) => {
             <SearchIcon
               style={{ boxSizing: "content-box" }}
               className="bg-danger rounded-circle p-2 text-white"
+              onClick={() => navigate("/search")}
             />
           </div>
         </div>

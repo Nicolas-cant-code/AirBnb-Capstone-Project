@@ -26,11 +26,13 @@ const ListingPage = ({ id }) => {
               <p className="text-gray-950">{5.0}</p>
               <p>•</p>
               <p className="underline text-gray-950">{123} reviews</p>
-              <p>•</p>
-              <WorkspacePremiumTwoToneIcon className="text-red-500" />
-              <p>Superhost</p>
-              <p>•</p>
-              <p>
+              <p className="hidden md:block">•</p>
+              <p className="hidden md:block">
+                <WorkspacePremiumTwoToneIcon className="text-red-500" />
+              </p>
+              <p className="hidden md:block">Superhost</p>
+              <p className="hidden md:block">•</p>
+              <p className="hidden md:block">
                 {"Cape Town"}, {"South Africa"}
               </p>
             </div>
@@ -55,7 +57,7 @@ const ListingPage = ({ id }) => {
               className="hover:scale-102 duration-300 cursor-pointer"
             />
           </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-col-1 md:grid-cols-2 gap-2">
             <img
               src={"/assets/Airbnbs/Bnb1.png"}
               alt="Airbnb picture"
@@ -64,23 +66,23 @@ const ListingPage = ({ id }) => {
             <img
               src={"/assets/Airbnbs/Bnb1.png"}
               alt="Airbnb picture"
-              className="hover:scale-102 duration-300 cursor-pointer"
+              className="hover:scale-102 duration-300 cursor-pointer hidden md:block"
             />
             <img
               src={"/assets/Airbnbs/Bnb1.png"}
               alt="Airbnb picture"
-              className="hover:scale-102 duration-300 cursor-pointer"
+              className="hover:scale-102 duration-300 cursor-pointer hidden md:block"
             />
             <img
               src={"/assets/Airbnbs/Bnb1.png"}
               alt="Airbnb picture"
-              className="hover:scale-102 duration-300 cursor-pointer"
+              className="hover:scale-102 duration-300 cursor-pointer hidden md:block"
             />
           </div>
         </div>
 
-        <div className="flex w-full justify-between">
-          <div className="w-3/5">
+        <div className="flex w-full justify-between flex-col-reverse lg:flex-row">
+          <div className="w-3/3 lg:w-3/5">
             <div className="flex justify-between items-center pb-4 border-b-2 border-gray-300/40">
               <span>
                 <h2>Entire rental unit hosted by Sarah</h2>
@@ -156,12 +158,12 @@ const ListingPage = ({ id }) => {
                 <Calendar />
               </div>
             </div>
-            <div className="py-4 border-y-2 border-gray-300/40 w-5/3">
+            <div className="py-4 border-y-2 border-gray-300/40 w-3/3 lg:w-5/3">
               <h3 className="flex">
                 <StarTwoToneIcon className="text-red-500 fs-2 mr-2" /> {"5.0"} •{" "}
                 {123} reviews
               </h3>
-              <div className="grid grid-cols-2 gap-x-15 gap-y-4 mt-5 fw-semibold">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-15 gap-y-4 mt-5 fw-semibold">
                 <div className="flex justify-between mb-2">
                   <span>Cleanliness</span>
                   <span className="flex items-center gap-2">
@@ -205,7 +207,7 @@ const ListingPage = ({ id }) => {
                   </span>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-5 mt-5 mb-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 mb-5">
                 <Comment number={1} />
                 <Comment number={2} />
                 <Comment number={2} />
@@ -218,7 +220,7 @@ const ListingPage = ({ id }) => {
                 className="w-fit border-2 border-gray-400 rounded-50 shadow-md/25 hover:scale-102 duration-300"
               />
             </div>
-            <div className="py-4 border-y-2 border-gray-300/40 w-5/3 mt-5">
+            <div className="py-4 border-y-2 border-gray-300/40 w-3/3 lg:w-5/3 mt-5">
               <div className="flex gap-4 items-center">
                 <div className="relative">
                   <WorkspacePremiumTwoToneIcon className="text-red-500 fs-3 absolute bottom-0 right-0" />
@@ -259,9 +261,9 @@ const ListingPage = ({ id }) => {
                 Note: DO NOT transfer money outside of the platform.
               </p>
             </div>
-            <div className="pt-4 pb-5 w-5/3 mt-2">
+            <div className="pt-4 pb-5 w-3/3 lg:w-5/3 mt-2">
               <h3>Things to know</h3>
-              <div className="grid grid-cols-3 gap-5 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-4">
                 <div className="flex flex-col gap-1">
                   <h4 className="fs-5 mb-2">House rules</h4>
                   <ul className="list-disc text-gray-500">
