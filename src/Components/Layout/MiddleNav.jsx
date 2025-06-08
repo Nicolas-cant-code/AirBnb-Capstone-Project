@@ -5,31 +5,34 @@ const MiddleNav = ({ type }) => {
   return (
     <div>
       {type === "home" ? (
-        <div className="d-flex gap-4" style={{ marginBottom: "-0.5rem" }}>
-          <div className="d-flex flex-column align-items-center">
+        <div
+          className="flex gap-2 md:gap-4"
+          style={{ marginBottom: "-0.5rem" }}
+        >
+          <div className="flex-column align-items-center flex">
             <span style={{ marginBottom: "-1rem" }}>Places to stay</span>
             <span className="d-block">__</span>
           </div>
-          <div>
+          <div className="hidden lg:block">
             <span style={{ marginBottom: "-1rem" }}>Experiences</span>
             <span className="d-none">__</span>
           </div>
-          <div>
+          <div className="hidden lg:block">
             <span style={{ marginBottom: "-1rem" }}>Online Experiences</span>
             <span className="d-none">__</span>
           </div>
         </div>
       ) : type === "search" ? (
-        <div className="d-flex flex-coloumn align-items-center justify-content-center gap-3 bg-white text-dark py-1 px-3 border shadow-sm rounded-50">
-          <div>Cape Town</div>
-          <div className="fw-light text-light-grey">|</div>
-          <div>Jun 24-29</div>
-          <div className="fw-light text-light-grey">|</div>
-          <div>2 guests</div>
+        <div className="d-flex flex-coloumn align-items-center justify-content-center space-x-2 md:space-x-5 bg-white text-dark py-1 px-3 border shadow-sm rounded-50">
+          <div className="pl-0 md:pl-2 cursor-pointer">Cape Town</div>
+          <div className="fw-light text-light-grey cursor-default">|</div>
+          <div className="text-light-grey cursor-pointer">Add dates</div>
+          <div className="fw-light text-light-grey cursor-default">|</div>
+          <div className="text-light-grey cursor-pointer">Add guests</div>
           <div style={{ marginRight: "-0.5rem" }}>
             <SearchIcon
               style={{ boxSizing: "content-box" }}
-              className="bg-danger rounded-circle p-2 text-white"
+              className="bg-danger rounded-circle p-2 text-gray-50 cursor-pointer hover:text-gray-300"
             />
           </div>
         </div>
