@@ -22,13 +22,13 @@ const Nav = ({ type }) => {
               <img
                 src="https://logos.logofury.com/logo_src/989c9e706ee391765020e1095895bd47.png"
                 alt="AirBnB Logo"
-                className="img-fluid mh-100 hidden md:block"
+                className="img-fluid rounded-0 mh-100 hidden md:block"
               />
             ) : (
               <img
                 src="//upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/512px-Airbnb_Logo_B%C3%A9lo.svg.png"
                 alt="AirBnB Logo"
-                className="img-fluid mh-100 hidden md:block"
+                className="img-fluid rounded-0 mh-100 hidden md:block"
               />
             )}
           </div>
@@ -36,10 +36,16 @@ const Nav = ({ type }) => {
           <MiddleNav type={type} />
 
           <div className="d-flex gap-2 md:gap-4 align-items-center cursor-pointer">
-            <span className="hover:text-red-600">Become A Host</span>
-            <div className="hidden md:block">
-              <LanguageIcon className="hover:text-red-600" />
-            </div>
+            {type === "create" ? (
+              <span className="mr-2">{"John Doe"}</span>
+            ) : (
+              <div className="flex  space-x-1 md:space-x-4">
+                <span className="hover:text-red-600">Become A Host</span>
+                <div className="hidden md:block">
+                  <LanguageIcon className="hover:text-red-600" />
+                </div>
+              </div>
+            )}
             <span
               className="d-flex gap-2 align-items-center py-2 px-3 bg-white border shadow-sm/15 hover:scale-105
               transition-all duration-200"

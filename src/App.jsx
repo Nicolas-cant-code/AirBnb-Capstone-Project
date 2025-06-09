@@ -3,6 +3,8 @@ import "./App.css";
 import HomePage from "./Components/Pages/Home/HomePage";
 import SearchPage from "./Components/Pages/Search/SearchPage";
 import ListingPage from "./Components/Pages/Listing/ListingPage";
+import LoginPage from "./Components/Pages/Login/LoginPage";
+import CreateListing from "./Components/Pages/Listing/CreateListing";
 
 function App() {
   return (
@@ -16,6 +18,12 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/listing/:id" element={<ListingPage />} />
+        </Routes>
+        <Routes>
+          <Route path="/create/listing" element={<CreateListing />} />
+        </Routes>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </Router>
     </div>
