@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "nodemon --exec ts-node src/index.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -17,6 +18,10 @@
     "@tailwindcss/vite": "^4.1.8",
     "bootstrap": "^5.3.6",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "dropzone": "^6.0.0-beta.2",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.1",
     "react": "^19.1.0",
     "react-date-range": "^2.0.1",
     "react-dom": "^19.1.0",
@@ -25,6 +30,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
@@ -32,6 +39,9 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }
 }

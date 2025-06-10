@@ -54,6 +54,17 @@
   justify-self: center;
 }
 
+.no-underline {
+  text-decoration: none !important;
+}
+.no-underline:hover {
+  text-decoration: underline !important;
+}
+
+.dropzone .dz-progress {
+  display: none !important;
+}
+
 .fs-7 {
   font-size: 0.8rem;
 }

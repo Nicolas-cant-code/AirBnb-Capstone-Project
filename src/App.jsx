@@ -5,6 +5,9 @@ import SearchPage from "./Components/Pages/Search/SearchPage";
 import ListingPage from "./Components/Pages/Listing/ListingPage";
 import LoginPage from "./Components/Pages/Login/LoginPage";
 import CreateListing from "./Components/Pages/Listing/CreateListing";
+import ViewListings from "./Components/Pages/Listing/ViewListings";
+import Reservations from "./Components/Pages/Host/Reservations";
+import SignUp from "./Components/Pages/Login/SignUp";
 
 function App() {
   return (
@@ -12,18 +15,13 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-        </Routes>
-        <Routes>
           <Route path="/search" element={<SearchPage />} />
-        </Routes>
-        <Routes>
           <Route path="/listing/:id" element={<ListingPage />} />
-        </Routes>
-        <Routes>
           <Route path="/create/listing" element={<CreateListing />} />
-        </Routes>
-        <Routes>
+          <Route path="/view/listings" element={<ViewListings />} />
+          <Route path="/view/reservations" element={<Reservations />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Router>
     </div>

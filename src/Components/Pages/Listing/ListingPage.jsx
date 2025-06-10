@@ -12,6 +12,7 @@ import Button from "../../Layout/Button";
 import Calendar from "../../Layout/Calendar";
 import Comment from "../../Layout/Comment";
 import Progressbar from "../../Layout/Progressbar";
+import Explore from "../../Layout/Explore";
 
 const ListingPage = ({ id }) => {
   return (
@@ -302,6 +303,7 @@ const ListingPage = ({ id }) => {
           <PaymentCard />
         </div>
       </div>
+      <Explore padding={"px-6"} />
       <Footer padding={"px-6"} />
     </div>
   );

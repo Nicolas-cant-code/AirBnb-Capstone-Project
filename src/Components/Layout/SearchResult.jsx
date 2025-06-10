@@ -23,7 +23,7 @@ const SearchResult = ({
 
   return (
     <div
-      className="py-4 border-t-2 border-gray-300/40 flex relative w-full hover:scale-102 xl:hover:scale-101 transition-all duration-300 cursor-pointer"
+      className="py-4 border-t-3 border-gray-400/40 flex relative w-full hover:scale-102 xl:hover:scale-101 transition-all duration-300 cursor-pointer"
       onClick={() => handleListingClick()}
     >
       <div className="pr-5">

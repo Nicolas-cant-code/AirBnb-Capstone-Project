@@ -4,12 +4,12 @@ import Button from "./Button";
 const NavTags = () => {
   return (
     <div className="flex align-items-center pb-4 border-b-2 border-gray-300/40">
-      <div className="flex space-x-2 lg:space-x-3 pr-4 lg:pr-8 border-r-2 border-gray-300/40  lg:w-1/3 xl:w-fit">
+      <div className="flex space-x-2 lg:space-x-3 pr-4 border-r-2 border-gray-300/40 w-3/4 lg:w-1/3 xl:w-2/7">
         <Button slot={"Price"} type={"dropdown"} />
         <Button slot={"Type of place"} type={"dropdown"} />
       </div>
-      <div className="pl-4 lg:pl-8 flex space-x-2 lg:space-x-3 justify-between xl:justify-content-start">
-        <span className="space-x-2 lg:space-x-3 justify-content-center xl:w-fit hidden md:flex mr-3 lg:mr-45">
+      <div className="pl-4 flex space-x-2 lg:space-x-3 justify-between xl:justify-content-start w-1/4 sm:w-7/9 relative">
+        <span className="space-x-2 lg:space-x-3 justify-content-center xl:w-fit hidden md:flex mr-3 lg:mr-5">
           <Button slot={"Wifi"} />
           <Button slot={"Iron"} />
           <Button slot={"Dryer"} />
@@ -20,7 +20,9 @@ const NavTags = () => {
           <Button slot={"Free parking"} />
           <Button slot={"Free cancellation"} />
         </span>
-        <Button slot={"Filter"} type={"filter"} />
+        <span>
+          <Button slot={"Filter"} type={"filter"} />
+        </span>
       </div>
     </div>
   );
