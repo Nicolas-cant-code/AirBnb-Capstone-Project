@@ -52,10 +52,10 @@ const Search = () => {
   };
 
   return (
-    <div className="w-100 lg:w-75 d-flex justify-self-center pb-5">
+    <div className="w-100 lg:w-75 d-flex justify-self-center pb-5 mb-4 lg:mb-0 h-[112px]">
       <div className="d-flex flex-coloumn align-items-center justify-content-between bg-white text-dark py-1 px-3 rounded-50 w-100">
         <div className="border-right ps-1 sm:ps-3 d-flex align-items-center gap-1 md:gap-4 cursor-pointer">
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column pr-2">
             <span className="fw-semibold fs-7">Hotels</span>
             <select
               id="select"
@@ -71,7 +71,7 @@ const Search = () => {
               <option value="Condo">Condo</option>
             </select>
           </div>
-          <div className="md:block hidden">
+          <div className="lg:block hidden">
             <KeyboardArrowDownIcon
               className="text-light-grey p-2 rounded-xs hover:bg-gray-200 rounded icon-hover"
               style={{
@@ -82,7 +82,7 @@ const Search = () => {
           </div>
         </div>
         <div
-          className="border-l-2 border-gray-300/40 pl-4 lg:pl-8 cursor-pointer flex flex-column"
+          className="border-l-2 border-gray-300/40 w-[110px] lg:w-fit pl-4 lg:pl-8 cursor-pointer flex flex-column"
           onChange={(event) => handleDatePicker("checkin", event)}
         >
           <span className="fw-semibold fs-7">Check in</span>
@@ -95,7 +95,7 @@ const Search = () => {
           />
         </div>
         <div
-          className="border-l-2 border-gray-300/40 pl-8 cursor-pointer flex flex-column"
+          className="border-l-2 border-gray-300/40 w-[110px] lg:w-fit pl-4 lg:pl-8 cursor-pointer flex flex-column"
           onChange={(event) => handleDatePicker("checkout", event)}
         >
           <span className="fw-semibold fs-7">Check out</span>
@@ -107,7 +107,7 @@ const Search = () => {
             onBlur={(e) => (e.target.type = "text")}
           />
         </div>
-        <div className="border-l-2 border-gray-300/40 pl-8 cursor-pointer flex flex-column">
+        <div className="border-l-2 border-gray-300/40 pl-4 lg:pl-8  w-[120px] lg:w-fit cursor-pointer flex flex-column">
           <span className="fw-semibold fs-7">Guests</span>
           <input
             type="number"
@@ -120,7 +120,8 @@ const Search = () => {
         <div style={{ marginRight: "-0.5rem" }}>
           <SearchIcon
             style={{ boxSizing: "content-box" }}
-            className="cursor-pointer bg-danger rounded-circle p-3 text-white"
+            className="cursor-pointer bg-danger rounded-circle p-3 text-white
+            absolute right-[44vw] xl:right-42 top-42 xl:top-25"
             onClick={handleSearch}
           />
         </div>
