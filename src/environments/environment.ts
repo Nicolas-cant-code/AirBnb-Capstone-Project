@@ -3,6 +3,16 @@ import { ProdEnvironment } from "./environment.prod";
 
 export interface Environment {
   db_url: string;
+
+  jwt_secret_key: string;
+  jwt_refresh_secret_key: string;
+
+  redis: {
+    username?: string;
+    password?: string;
+    host: string;
+    port: number;
+  };
 }
 
 export function getEnvironmentVariables() {

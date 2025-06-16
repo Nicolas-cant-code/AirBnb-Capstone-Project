@@ -11,9 +11,9 @@ const ViewListings = () => {
         <Nav type={"create"} />
       </div>
       <div className="flex flex-col sm:flex-row gap-3 px-5 align-items-center border-b-2 border-gray-700/25 pb-4 mb-5">
-        <Button slot={"View Reservations"} />
-        <Button slot={"View listings"} />
-        <Button slot={"Create listing"} />
+        <Button slot={"View Reservations"} href={"/view/reservations"} />
+        {/* <Button slot={"View listings"} /> */}
+        <Button slot={"Create listing"} href={"/create/listing"} />
       </div>
       <div className="px-4">
         <h2 className="text-light-grey fs-4 pb-5">My Hotel List</h2>

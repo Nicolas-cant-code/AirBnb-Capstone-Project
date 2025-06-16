@@ -63,15 +63,13 @@ const Footer = ({ padding }) => {
               <select
                 className="dropdown-toggle mb-0"
                 id="dropdownMenuButton"
-                dataToggle="dropdown"
-                ariaHaspopup="true"
-                ariaExpanded="false"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                <div ariaLabelledby="dropdownMenuButton">
-                  <option className="dropdown-item">English</option>
-                  <option className="dropdown-item">Russian</option>
-                  <option className="dropdown-item">Afrikaans</option>
-                </div>
+                <option className="dropdown-item">English</option>
+                <option className="dropdown-item">Russian</option>
+                <option className="dropdown-item">Afrikaans</option>
               </select>
             </div>
           </div>
@@ -80,15 +78,13 @@ const Footer = ({ padding }) => {
               <select
                 className="dropdown-toggle mb-0"
                 id="dropdownMenuButton"
-                dataToggle="dropdown"
-                ariaHaspopup="true"
-                ariaExpanded="false"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                <div ariaLabelledby="dropdownMenuButton">
-                  <option className="dropdown-item">R RND</option>
-                  <option className="dropdown-item">$ USD</option>
-                  <option className="dropdown-item">€ EUR</option>
-                </div>
+                <option className="dropdown-item">R RND</option>
+                <option className="dropdown-item">$ USD</option>
+                <option className="dropdown-item">€ EUR</option>
               </select>
             </div>
           </div>

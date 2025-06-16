@@ -12,9 +12,9 @@ const Reservations = () => {
         <Nav type={"create"} />
       </div>
       <div className="flex flex-col sm:flex-row gap-3 px-5 align-items-center border-b-2 border-gray-700/25 pb-4 mb-5">
-        <Button slot={"View Reservations"} />
-        <Button slot={"View listings"} />
-        <Button slot={"Create listing"} />
+        {/* <Button slot={"View Reservations"} href={"/view/reservations"} /> */}
+        <Button slot={"View listings"} href={"/view/listings"} />
+        <Button slot={"Create listing"} href={"/create/listing"} />
       </div>
       <div className="px-3 sm:px-4 mt-5 text-sm md:text-xl fw-semibold">
         <p className="mb-2">My Reservations</p>

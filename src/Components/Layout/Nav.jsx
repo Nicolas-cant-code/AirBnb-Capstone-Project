@@ -22,6 +22,16 @@ const Nav = ({ type }) => {
     setIsModalOpen(false);
   };
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const typeOfUser = user ? user.type : null;
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    alert("You have been logged out successfully.");
+    naviagate("/");
+  };
+
   return (
     <div className="py-4">
       <div style={{ height: "48px" }}>
@@ -48,6 +58,7 @@ const Nav = ({ type }) => {
                 alt="AirBnB Logo"
                 className="img-fluid rounded-0 mh-100 hidden md:block"
                 href={type !== "login" ? "/" : "#"}
+                onClick={() => naviagate("/")}
               />
             )}
           </div>
@@ -56,12 +67,14 @@ const Nav = ({ type }) => {
 
           <div className="d-flex gap-2 md:gap-4 align-items-center cursor-pointer">
             {type === "create" ? (
-              <span className="mr-2">{"John Doe"}</span>
+              <span className="mr-2">{user.username}</span>
             ) : (
               <div className="flex  space-x-1 md:space-x-4">
-                <a className="no-underline text-white" onClick={() => host()}>
-                  Become A Host
-                </a>
+                {typeOfUser !== "host" && (
+                  <a className="no-underline text-white" onClick={() => host()}>
+                    Become A Host
+                  </a>
+                )}
                 <div className="hidden md:block">
                   <LanguageIcon className="hover:text-red-600" />
                 </div>
@@ -81,27 +94,71 @@ const Nav = ({ type }) => {
                   className="text-gray-500 hover:text-red-600/80"
                 />
               </span>
-              <div
-                className={`${
-                  isModalOpen ? "block" : "hidden"
-                } absolute top-[40px] right-0 flex flex-col bg-gray-400 w-full text-center rounded-2 z-10`}
-                onMouseEnter={openModal}
-                onMouseLeave={closeModal}
-              >
-                <a
-                  className="no-underline text-white
+              {!user ? (
+                <div
+                  className={`${
+                    isModalOpen ? "block" : "hidden"
+                  } absolute top-[40px] right-0 flex flex-col bg-gray-400 w-full text-center rounded-2 z-10`}
+                  onMouseEnter={openModal}
+                  onMouseLeave={closeModal}
+                >
+                  <a
+                    className="no-underline text-white
                   hover:bg-gray-500 p-1 rounded-top-2"
-                  href="/login"
+                    href="/login"
+                  >
+                    Login
+                  </a>
+                  <a
+                    className="no-underline text-white hover:bg-gray-500 p-1 pb-2 rounded-bottom-2"
+                    href="/signup"
+                  >
+                    Sign up
+                  </a>
+                </div>
+              ) : user.type === "host" ? (
+                <div
+                  className={`${
+                    isModalOpen ? "block" : "hidden"
+                  } absolute top-[40px] right-0 flex flex-col bg-gray-400 w-full text-center rounded-2 z-10`}
+                  onMouseEnter={openModal}
+                  onMouseLeave={closeModal}
                 >
-                  Login
-                </a>
-                <a
-                  className="no-underline text-white hover:bg-gray-500 p-1 pb-2 rounded-bottom-2"
-                  href="/signup"
+                  <a
+                    className="no-underline text-white
+                  hover:bg-gray-500 p-1 rounded-top-2"
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    Logout
+                  </a>
+                  <a
+                    className="no-underline text-white hover:bg-gray-500 p-1 pb-2 rounded-bottom-2"
+                    href="/view/listings"
+                  >
+                    View Listings
+                  </a>
+                </div>
+              ) : (
+                <div
+                  className={`${
+                    isModalOpen ? "block" : "hidden"
+                  } absolute top-[40px] right-0 flex flex-col bg-gray-400 w-full text-center rounded-2 z-10`}
+                  onMouseEnter={openModal}
+                  onMouseLeave={closeModal}
                 >
-                  Sign up
-                </a>
-              </div>
+                  <a
+                    className="no-underline text-white
+                  hover:bg-gray-500 p-1 rounded-top-2"
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    Logout
+                  </a>
+                </div>
+              )}
             </span>
           </div>
         </div>

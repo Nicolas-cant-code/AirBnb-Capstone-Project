@@ -1,12 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "../../Layout/Input";
 import BlueButton from "../../Layout/BlueButton";
 import { useLocation } from "react-router-dom";
 
 const SignUp = () => {
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+    type: "",
+  });
+
+  const navigate = useNavigate();
   const location = useLocation();
   const host = location.state?.host || false;
-  console.log("Host:", host);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:3000/api/user/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // If validation errors were returned
+        if (data.errors) {
+          const messages = data.errors.map((err) => err.msg).join("\n");
+          alert("Signup failed:\n" + messages);
+        } else {
+          alert("Signup failed: " + (data.message || res.statusText));
+        }
+        return;
+      }
+
+      // Success
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+
+      alert("Welcome to Airbnb, " + form.username + "!");
+      navigate("/");
+    } catch (err) {
+      console.error("Network or server error:", err);
+      alert("An error occurred. Please try again later.");
+    }
+  };
+
   return (
     <div className="px-4">
       <div>
@@ -16,41 +64,61 @@ const SignUp = () => {
           className="w-auto h-6 md:h-10 my-4 rounded-0"
         />
       </div>
-      <div
-        className="flex flex-col items-center justify-center"
-        style={{ scale: "0.8", marginTop: "-5rem" }}
-      >
-        <h2 className="fs-1">Sign Up</h2>
-        <div className="mt-2 text-indigo-500">
-          <Input slot={"Username"} required />
-          <Input slot={"Email"} required />
-          <Input slot={"Password"} required />
-          <label htmlFor="type" className="mb-2 fs-7 fw-semibold">
-            Account Type
-          </label>
-          <select
-            name="type"
-            id="type"
-            className="text-black outline-red-600 bg-white border-2 border-gray-700 rounded-md px-3 py-2 fw-semibold w-full"
-          >
-            <option value="" selected disabled>
-              Please Select
-            </option>
-            <option value="guest">Guest</option>
-            <option value="host" selected={host ? true : false}>
-              Host
-            </option>
-          </select>
-          <div className="flex flex-col items-center mt-3 justify-center gap-2">
-            <a className="no-underline cursor-pointer" href="/login">
-              Have an account?
-            </a>
+      <div style={{ scale: "0.8" }}>
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="flex flex-col items-center justify-center"
+        >
+          <h2 className="fs-1">Sign Up</h2>
+          <div className="mt-2 text-indigo-500">
+            <Input
+              slot={"Username"}
+              required
+              id={"username"}
+              onChange={(e) => handleChange(e)}
+            />
+            <Input
+              slot={"Email"}
+              required
+              id={"email"}
+              onChange={(e) => handleChange(e)}
+            />
+            <Input
+              slot={"Password"}
+              required
+              type={"password"}
+              id={"password"}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="type" className="mb-2 fs-7 fw-semibold">
+              Account Type
+            </label>
+            <select
+              required
+              name="type"
+              onChange={(e) => handleChange(e)}
+              className="text-black outline-red-600 bg-white border-2 border-gray-700 rounded-md px-3 py-2 fw-semibold w-full"
+            >
+              <option value="" selected disabled>
+                Please Select
+              </option>
+              <option value="guest">Guest</option>
+              <option value="host" selected={host ? true : false}>
+                Host
+              </option>
+            </select>
+            <div className="flex flex-col items-center mt-3 justify-center gap-2">
+              <a className="no-underline cursor-pointer" href="/login">
+                Have an account?
+              </a>
+            </div>
           </div>
-        </div>
-        <BlueButton
-          slot={"Sign Up"}
-          styles={"w-[25vw] max-w-[400px] min-w-[200px] mt-4"}
-        />
+          <BlueButton
+            type="submit"
+            slot={"Sign Up"}
+            styles={"w-[25vw] max-w-[400px] min-w-[200px] mt-4"}
+          />
+        </form>
       </div>
     </div>
   );
