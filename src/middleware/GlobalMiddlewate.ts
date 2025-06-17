@@ -48,9 +48,9 @@ export class GlobalMiddleware {
     }
   }
 
-  static adminRole(req, res, next) {
+  static hostRole(req, res, next) {
     const user = req.user;
-    if (user.type !== "admin") {
+    if (user.type !== "host") {
       next(new Error("Unauthorized access"));
       // req.errorStatus = 401;
     }

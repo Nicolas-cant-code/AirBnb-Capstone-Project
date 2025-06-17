@@ -7,6 +7,7 @@ import ListingPage from "./Components/Pages/Listing/ListingPage";
 import LoginPage from "./Components/Pages/Login/LoginPage";
 import CreateListing from "./Components/Pages/Listing/CreateListing";
 import ViewListings from "./Components/Pages/Listing/ViewListings";
+import EditListing from "./Components/Pages/Listing/EditListing";
 import Reservations from "./Components/Pages/Host/Reservations";
 import SignUp from "./Components/Pages/Login/SignUp";
 
@@ -34,6 +35,7 @@ function App() {
             <>
               <Route path="/create/listing" element={<CreateListing />} />
               <Route path="/view/listings" element={<ViewListings />} />
+              <Route path="/edit/listings" element={<EditListing />} />
               <Route path="/view/reservations" element={<Reservations />} />
             </>
           )}

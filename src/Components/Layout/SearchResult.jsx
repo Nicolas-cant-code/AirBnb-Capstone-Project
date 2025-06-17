@@ -5,14 +5,16 @@ import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import StarTwoToneIcon from "@mui/icons-material/StarTwoTone";
 
 const SearchResult = ({
-  img,
+  images,
   title,
   tags,
-  rating,
-  description,
+  location,
+  bedrooms,
+  bathrooms,
+  type,
   price,
   favourite,
-  reviewCount,
+  user,
   id,
 }) => {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const SearchResult = ({
     >
       <div className="pr-5">
         <img
-          src={`/assets/Airbnbs/${img}`}
+          src={`/${images[0]}`}
           alt={title}
           className="max-w-[270px] sm:max-w-[300px] max-h-[180px] sm:max-h-[200px] rounded-xl"
         />
@@ -36,10 +38,12 @@ const SearchResult = ({
       <div className="flex flex-col w-full">
         <div className="flex justify-between">
           <h4 className="fs-6 text-light-grey mb-1 hidden sm:block">
-            Entire home in Cape Town
+            {type} in {location}
           </h4>
           <div className="z-1 absolute sm:relative left-2 top-8 bg-white rounded-full hover:scale-110">
-            {favourite ? (
+            {user.type === "host" ? (
+              <></>
+            ) : favourite ? (
               <FavoriteTwoToneIcon
                 className="text-red-500 hover:bg-red-200 rounded-full p-1"
                 style={{ boxSizing: "content-box" }}
@@ -55,18 +59,23 @@ const SearchResult = ({
         <h3 className="fs-5 sm:fs-4 mb-0">{title}</h3>
         <div className="flex flex-col max-w-md md:max-w-[250px] lg:max-w-xl xl:max-w-3xl">
           <span className="text-light-grey pb-1 sm:pb-2">________</span>
-          <span className="text-light-grey">{description}</span>
-          <span className="text-light-grey hidden sm:block">{tags}</span>
+          <span className="text-light-grey mb-2">
+            {bedrooms} Bedrooms • {bathrooms} Bathrooms • {bedrooms} -{" "}
+            {bedrooms * 2} Guests
+          </span>
+          <span className="text-light-grey hidden sm:block">
+            {tags.map((tag) => `${tag}`).join(" • ")}
+          </span>
           <span className="text-light-grey">________</span>
         </div>
         <div className="block sm:flex justify-between mt-0 sm:mt-[8px] w-full">
           <span className="font-semibold hidden sm:flex align-center mr-auto">
-            {rating}{" "}
+            {Math.ceil(Math.random() * 5)}{" "}
             <StarTwoToneIcon
               className="text-yellow-500 px-2"
               style={{ boxSizing: "content-box" }}
             />{" "}
-            ({reviewCount} reviews)
+            ({Math.ceil(Math.random() * 100)} reviews)
           </span>
           <span>
             <strong className="fs-6 sm:fs-5">R{price}</strong> /night

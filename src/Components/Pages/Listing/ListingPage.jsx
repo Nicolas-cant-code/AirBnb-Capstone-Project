@@ -15,6 +15,9 @@ import Progressbar from "../../Layout/Progressbar";
 import Explore from "../../Layout/Explore";
 
 const ListingPage = ({ id }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const typeOfUser = user ? user.type : null;
+
   return (
     <div>
       <div className="px-6">
@@ -300,7 +303,7 @@ const ListingPage = ({ id }) => {
               </div>
             </div>
           </div>
-          <PaymentCard />
+          <PaymentCard user={user} />
         </div>
       </div>
       <Explore padding={"px-6"} />

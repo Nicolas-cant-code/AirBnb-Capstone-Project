@@ -15,7 +15,15 @@ class ListingRouter {
     this.putRoutes();
     this.deleteRoutes();
   }
-  getRoutes() {}
+
+  getRoutes() {
+    this.router.get(
+      "/get/listings",
+      GlobalMiddleware.checkError,
+      ListingController.getListing
+    );
+  }
+
   postRoutes() {
     this.router.post(
       "/create",
@@ -26,8 +34,24 @@ class ListingRouter {
     );
   }
   patchRoutes() {}
-  putRoutes() {}
-  deleteRoutes() {}
+  putRoutes() {
+    this.router.put(
+      "/update",
+      new Utils().multer.array("images", 6),
+      ListingValidator.createListing(),
+      GlobalMiddleware.checkError,
+      ListingController.updateListing
+    );
+  }
+
+  deleteRoutes() {
+    this.router.get(
+      "/delete",
+      // GlobalMiddleware.auth,
+      // GlobalMiddleware.hostRole,
+      ListingController.deleteListing
+    );
+  }
 }
 
 export default new ListingRouter().router;

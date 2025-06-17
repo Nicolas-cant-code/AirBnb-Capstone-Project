@@ -12,6 +12,7 @@ const PaymentCard = ({
   tags,
   reviewCount,
   description,
+  user,
 }) => {
   return (
     <div className="mb-4">
@@ -49,9 +50,21 @@ const PaymentCard = ({
           </div>
         </div>
         <div className="mb-3">
-          <button className="bg-red-500 text-white py-2 w-full rounded-3 hover:scale-103 duration-300 hover:bg-red-600">
+          <button
+            className={`${
+              user.type === "host"
+                ? "bg-gray-500"
+                : "bg-red-500 hover:bg-red-600 hover:scale-103"
+            } text-white py-2 w-full rounded-3 duration-300`}
+            disabled={user.type === "host" ? false : true}
+          >
             Reserve
           </button>
+          {user.type === "host" && (
+            <p className="mt-2 text-red-500 text-center fw-bold">
+              You cannot reserve a bnb as a host
+            </p>
+          )}
           <p className="mt-2 text-gray-400 text-center">
             You won't be charged yet
           </p>
