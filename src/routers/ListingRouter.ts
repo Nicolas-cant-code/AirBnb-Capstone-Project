@@ -36,7 +36,7 @@ class ListingRouter {
   patchRoutes() {}
   putRoutes() {
     this.router.put(
-      "/update",
+      "/edit/listing/:id",
       new Utils().multer.array("images", 6),
       ListingValidator.createListing(),
       GlobalMiddleware.checkError,

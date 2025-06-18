@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Dropzone from "dropzone";
 import "dropzone/dist/dropzone.css";
 import Nav from "../../Layout/Nav";
@@ -9,57 +9,105 @@ import BlueButton from "../../Layout/BlueButton";
 
 Dropzone.autoDiscover = false;
 
-const CreateListing = ({
-  listing_name,
-  location,
-  description,
-  bedrooms,
-  bathrooms,
-  type,
-  price,
-  amenities,
-  images,
-}) => {
+const EditListing = () => {
   // get user from localStorage and Id from MongoDB
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
+  const locationId = useLocation();
+  const listing = locationId.state?.listing || null;
+
+  if (listing == null) {
+    alert("Listing ID not found!");
+    navigate("/view/listings");
+  }
+
   const navigate = useNavigate();
-  const [form, setForm] = React.useState({
-    listing_name: listing_name || "",
-    location: location || "",
-    description: description || "",
-    bedrooms: bedrooms || "",
-    bathrooms: bathrooms || "",
-    type: type || "",
-    price: price || "",
-    amenities: amenities || "",
-    images: images || [],
+  const [form, setForm] = useState({
+    listing_name: listing.listing_name || "",
+    location: listing.location || "",
+    description: listing.description || "",
+    bedrooms: listing.bedrooms || "",
+    bathrooms: listing.bathrooms || "",
+    type: listing.type || "",
+    price: listing.price || "",
+    amenities: listing.amenities || "",
     host_id: user._id || "",
   });
+
+  const [images, setImages] = useState(listing.images || []);
 
   const dropzoneRef = useRef(null);
   const dropzoneInstanceRef = useRef(null);
 
+  let count = 0;
   useEffect(() => {
-    if (Dropzone.instances.length > 0) {
-      Dropzone.instances.forEach((dz) => dz.destroy());
+    count++;
+    if (dropzoneRef.current && !dropzoneInstanceRef.current) {
+      if (Dropzone.instances.length > 0) {
+        Dropzone.instances.forEach((dz) => dz.destroy());
+      }
+
+      const dz = new Dropzone(dropzoneRef.current, {
+        url: "/upload",
+        autoProcessQueue: false,
+        paramName: "file",
+        maxFilesize: 2, // MB
+        acceptedFiles: "image/*",
+        maxFiles: 8,
+        addRemoveLinks: true,
+        thumbnailWidth: 150,
+        thumbnailHeight: 150,
+        clickable: dropzoneRef.current,
+      });
+
+      dropzoneInstanceRef.current = dz;
     }
 
-    const dz = new Dropzone(dropzoneRef.current, {
-      url: "/upload",
-      autoProcessQueue: false,
-      paramName: "file",
-      maxFilesize: 2, // MB
-      acceptedFiles: "image/*",
-      maxFiles: 8,
-      addRemoveLinks: true,
-      thumbnailWidth: 150,
-      thumbnailHeight: 150,
-      clickable: dropzoneRef.current,
-    });
+    if (images.length >= count) {
+      if (listing.images && listing.images.length > 0) {
+        listing.images.forEach((img, idx) => {
+          const mockFile = {
+            name: `Image ${idx + 1}`,
+            accepted: true,
+            kind: "existing",
+            dataURL: `${img}`,
+            thumbnailWidth: 150,
+            thumbnailHeight: 150,
+            clickable: dropzoneRef.current,
+            paramName: "file",
+            addRemoveLinks: true,
+          };
+          // Emit Dropzone events to add the file and show the thumbnail
+          dropzoneInstanceRef.current.emit("addedfile", mockFile);
+          dropzoneInstanceRef.current.emit(
+            "thumbnail",
+            mockFile,
+            "http://localhost:3000/" + mockFile.dataURL,
+            mockFile.name
+          );
+          dropzoneInstanceRef.current.emit("complete", mockFile);
 
-    dropzoneInstanceRef.current = dz;
-  }, []);
+          // Optionally, mark as already uploaded
+          mockFile.status = Dropzone.SUCCESS;
+        });
+      }
+
+      dropzoneInstanceRef.current.on("addedfile", (file) => {
+        // Only add real files (not mock files) to state
+        if (file.kind !== "existing") {
+          setImages((prev) => [...prev, file]);
+        }
+      });
+      dropzoneInstanceRef.current.on("removedfile", (file) => {
+        setImages((prev) =>
+          prev.filter((img) =>
+            // Remove by name for mock files, by reference for real files
+            file.kind === "existing" ? img !== file.dataURL : img !== file
+          )
+        );
+      });
+    }
+  }, [listing.images]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -78,6 +126,13 @@ const CreateListing = ({
       return;
     }
 
+    form.foreach(([key, value]) => {
+      if (value === "") {
+        alert(`${key} is required`);
+        return;
+      }
+    });
+
     const formData = new FormData();
 
     // Add form fields
@@ -86,22 +141,31 @@ const CreateListing = ({
     });
 
     // Add images from Dropzone
-    const dzFiles = dropzoneInstanceRef.current?.files || [];
-
-    if (dzFiles.length === 0) {
+    if (images.length === 0) {
       alert("At least 1 image is required");
       return;
     }
 
-    dzFiles.forEach((file) => {
-      formData.append("images", file);
+    images.forEach((img) => {
+      if (typeof img === "string") {
+        // Existing image path
+        formData.append("existingImages[]", img);
+      } else {
+        // New file
+        formData.append("images", img);
+      }
     });
 
+    formData.append("_id", listing._id);
+
     try {
-      const res = await fetch("http://localhost:3000/api/listing/create", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+        `http://localhost:3000/api/listing/edit/listing/${listing._id}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
 
       const data = await res.json();
 
@@ -109,14 +173,16 @@ const CreateListing = ({
         // If validation errors were returned
         if (data.errors) {
           const messages = data.errors.map((err) => err.msg).join("\n");
-          alert("Failed to crete Listing:\n" + messages);
+          alert("Failed to edit your Listing:\n" + messages);
         } else {
-          alert("Failed to crete Listing: " + (data.message || res.statusText));
+          alert(
+            "Failed to edit your Listing: " + (data.message || res.statusText)
+          );
         }
         return;
       }
 
-      alert("Successfully created a listing!");
+      alert("Successfully Updated your listing!");
       navigate("/view/listings");
     } catch (err) {
       console.error("Network or server error:", err);
@@ -129,7 +195,7 @@ const CreateListing = ({
       <Nav type={"create"} />
       <Button slot={"View my listings"} href={"/view/listings"} />
       <div className="flex flex-col items-center justify-center mt-4">
-        <h2>Edit Listing: {listing_name}</h2>
+        <h2>Edit Listing: {listing.listing_name}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Input
@@ -138,6 +204,7 @@ const CreateListing = ({
               id={"listing_name"}
               onChange={(e) => handleChange(e)}
               required
+              value={form.listing_name}
             />
             <Input
               slot={"Location"}
@@ -146,6 +213,7 @@ const CreateListing = ({
               id={"location"}
               onChange={(e) => handleChange(e)}
               type={"selectLocation"}
+              value={form.location}
             />
             <Input
               slot={"Description"}
@@ -153,6 +221,7 @@ const CreateListing = ({
               styles={"fs-7 h-30 w-100"}
               id={"description"}
               onChange={(e) => handleChange(e)}
+              value={form.description}
             />
           </div>
           <div>
@@ -165,6 +234,7 @@ const CreateListing = ({
                 id={"bedrooms"}
                 onChange={(e) => handleChange(e)}
                 required
+                value={form.bedrooms}
               />
               <Input
                 slot={"Baths"}
@@ -174,6 +244,7 @@ const CreateListing = ({
                 id={"bathrooms"}
                 onChange={(e) => handleChange(e)}
                 required
+                value={form.bathrooms}
               />
               <Input
                 slot={"Type"}
@@ -182,6 +253,7 @@ const CreateListing = ({
                 onChange={(e) => handleChange(e)}
                 styles={"max-w-[22vw] lg:max-w-[25vw]"}
                 required
+                value={form.type}
               />
             </div>
             <Input
@@ -191,6 +263,8 @@ const CreateListing = ({
               id={"price"}
               onChange={(e) => handleChange(e)}
               placeholder={"Price per night"}
+              required
+              value={form.price}
             />
             <div className="flex gap-2 relative">
               <Input
@@ -199,6 +273,7 @@ const CreateListing = ({
                 onChange={(e) => handleChange(e)}
                 styles={"max-w-[26vw] lg:max-w-[28vw]"}
                 required
+                value={form.amenities}
               />
               <BlueButton
                 slot={"Add"}
@@ -227,9 +302,12 @@ const CreateListing = ({
             className="dropzone w-[60vw] md:w-[80vw] 2xl:w-[60vw] border-2 rounded-3 mt-4"
             ref={dropzoneRef}
           ></form>
+          <p className="fw-semibold mt-2">
+            Note the first image will be the cover image
+          </p>
           <span className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <BlueButton
-              slot={"Create"}
+              slot={"Update"}
               styles={"w-[25vw] max-w-[400px] min-w-[200px] mt-5"}
               onClick={(e) => handleSubmit(e)}
             />
@@ -246,4 +324,4 @@ const CreateListing = ({
   );
 };
 
-export default CreateListing;
+export default EditListing;

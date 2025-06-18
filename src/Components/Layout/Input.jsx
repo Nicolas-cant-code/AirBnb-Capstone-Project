@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-const Input = ({ slot, styles, type, placeholder, id, required, onChange }) => {
+const Input = ({
+  slot,
+  styles,
+  type,
+  placeholder,
+  id,
+  required,
+  onChange,
+  value,
+}) => {
   const [locationNames, setLocationNames] = useState([]);
 
   useEffect(() => {
@@ -25,6 +34,7 @@ const Input = ({ slot, styles, type, placeholder, id, required, onChange }) => {
           required={required}
           onChange={onChange}
           name={id || null}
+          value={value || ""}
         />
       ) : type === "file" ? (
         <input
@@ -39,6 +49,7 @@ const Input = ({ slot, styles, type, placeholder, id, required, onChange }) => {
          hover:file:bg-blue-100"`}
           required={required}
           name={id || null}
+          value={value || ""}
         />
       ) : type === "select" ? (
         <select
@@ -48,6 +59,7 @@ const Input = ({ slot, styles, type, placeholder, id, required, onChange }) => {
           name={id || null}
           required={required}
           onChange={onChange}
+          value={value || ""}
         >
           <option value="" selected disabled></option>
           <option value="Home">Home</option>
@@ -64,6 +76,7 @@ const Input = ({ slot, styles, type, placeholder, id, required, onChange }) => {
           name={id || null}
           required={required}
           onChange={onChange}
+          value={value || ""}
         >
           <option value="" selected disabled>
             Please Select
@@ -82,6 +95,7 @@ const Input = ({ slot, styles, type, placeholder, id, required, onChange }) => {
           className={`text-black border-gray-700 border-2 p-3 rounded-2 w-[200px] sm:w-[250px] md:w-[350px] xl:w-[500px] outline-red-600 ${styles}`}
           required={required}
           name={id || null}
+          value={value || ""}
           min={1}
         />
       )}

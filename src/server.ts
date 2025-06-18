@@ -25,6 +25,7 @@ export class Server {
     this.connectRedis();
     this.allowCors();
     this.conigBodyParser();
+    this.setImageUpload();
   }
 
   dotenvConfig() {
@@ -59,6 +60,13 @@ export class Server {
     this.app.use("/api/user/", UserRouter);
     this.app.use("/api/location/", LocationRouter);
     this.app.use("/api/listing/", ListingRouter);
+  }
+
+  setImageUpload() {
+    this.app.use(
+      "/public/assets/Airbnbsimages",
+      express.static("public/assets/Airbnbsimages")
+    );
   }
 
   error404Handler() {

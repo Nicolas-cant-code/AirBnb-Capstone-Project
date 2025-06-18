@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "dropzone";
 import "dropzone/dist/dropzone.css";
@@ -14,7 +14,7 @@ const CreateListing = () => {
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
   const navigate = useNavigate();
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     listing_name: "",
     location: "",
     description: "",
@@ -99,9 +99,11 @@ const CreateListing = () => {
         // If validation errors were returned
         if (data.errors) {
           const messages = data.errors.map((err) => err.msg).join("\n");
-          alert("Failed to crete Listing:\n" + messages);
+          alert("Failed to create Listing:\n" + messages);
         } else {
-          alert("Failed to crete Listing: " + (data.message || res.statusText));
+          alert(
+            "Failed to create Listing: " + (data.message || res.statusText)
+          );
         }
         return;
       }
@@ -217,6 +219,9 @@ const CreateListing = () => {
             className="dropzone w-[60vw] md:w-[80vw] 2xl:w-[60vw] border-2 rounded-3 mt-4"
             ref={dropzoneRef}
           ></form>
+          <p className="fw-semibold mt-2">
+            Note the first image will be the cover image
+          </p>
           <span className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <BlueButton
               slot={"Create"}

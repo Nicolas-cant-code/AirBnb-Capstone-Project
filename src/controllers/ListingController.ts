@@ -84,11 +84,18 @@ export class ListingController {
 
     const listing = req.body;
 
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: "At least 1 image is required" });
+    const paths = req.files?.map((file) => file.path) || [];
+
+    let existingImages = req.body.existingImages || [];
+    if (typeof existingImages === "string") {
+      existingImages = [existingImages];
     }
 
-    const paths = req.files?.map((file) => file.path) || [];
+    const allImages = [...existingImages, ...paths];
+
+    if (allImages.length === 0) {
+      return res.status(400).json({ message: "At least 1 image is required" });
+    }
 
     try {
       let listingData = {
@@ -99,10 +106,9 @@ export class ListingController {
         price: parseInt(listing.price),
         bedrooms: parseInt(listing.bedrooms),
         bathrooms: parseInt(listing.bathrooms),
-        images: paths,
+        images: allImages,
         amenities:
           (listing.amenities || "").split(",").map((s) => s.trim()) || [],
-        host_id: listing.host_id,
         updated_at: new Date(),
       };
 
@@ -112,7 +118,11 @@ export class ListingController {
         { new: true }
       );
 
-      res.send(updatedListing);
+      if (!updatedListing) {
+        return res.status(404).json({ message: "Listing not found" });
+      }
+
+      res.json(updatedListing);
     } catch (e) {
       next(e);
     }

@@ -35,7 +35,7 @@ function App() {
             <>
               <Route path="/create/listing" element={<CreateListing />} />
               <Route path="/view/listings" element={<ViewListings />} />
-              <Route path="/edit/listings" element={<EditListing />} />
+              <Route path="/edit/listing/:id" element={<EditListing />} />
               <Route path="/view/reservations" element={<Reservations />} />
             </>
           )}

@@ -3,11 +3,13 @@ import Nav from "../../Layout/Nav";
 import Button from "../../Layout/Button";
 import SearchResult from "../../Layout/SearchResult";
 import BlueButton from "../../Layout/BlueButton";
+import { useNavigate } from "react-router-dom";
 
 const ViewListings = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const hostId = user ? user._id : null;
   const [listings, setListings] = useState([]);
+  const naviagate = useNavigate();
 
   useEffect(() => {
     if (!hostId) {
@@ -71,6 +73,15 @@ const ViewListings = () => {
     }
   };
 
+  const handleUpdate = (e, element) => {
+    e.preventDefault();
+    if (!element) {
+      alert("Listing item not found.");
+      return;
+    }
+    naviagate(`/edit/listing/${element._id}`, { state: { listing: element } });
+  };
+
   return (
     <div>
       <div className="px-4">
@@ -103,6 +114,7 @@ const ViewListings = () => {
                 slot={"Update"}
                 styles={"w-[270px] sm:w-[300px]"}
                 id={`Update-${element._id}`}
+                onClick={(e) => handleUpdate(e, element)}
               />
               <BlueButton
                 slot={"Delete"}
