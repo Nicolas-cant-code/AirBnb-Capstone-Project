@@ -316,6 +316,7 @@ const ListingPage = () => {
             cleaning={listing.cleaning}
             service={listing.service}
             host={listing.hostId}
+            listing_id={listing._id}
           />
         </div>
       </div>

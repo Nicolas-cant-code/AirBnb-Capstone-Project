@@ -22,6 +22,11 @@ class ListingRouter {
       GlobalMiddleware.checkError,
       ListingController.getListing
     );
+    this.router.get(
+      "/search/listings",
+      GlobalMiddleware.checkError,
+      ListingController.searchForListing
+    );
   }
 
   postRoutes() {

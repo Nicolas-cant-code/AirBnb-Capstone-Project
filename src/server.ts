@@ -8,6 +8,7 @@ import UserRouter from "./routers/UserRouter";
 import { Redis } from "./utils/Redis";
 import LocationRouter from "./routers/LocationRouter";
 import ListingRouter from "./routers/ListingRouter";
+import ReservationRouter from "./routers/ReservationRouter";
 
 export class Server {
   public app: express.Application = express.default();
@@ -60,6 +61,7 @@ export class Server {
     this.app.use("/api/user/", UserRouter);
     this.app.use("/api/location/", LocationRouter);
     this.app.use("/api/listing/", ListingRouter);
+    this.app.use("/api/reservation/", ReservationRouter);
   }
 
   setImageUpload() {

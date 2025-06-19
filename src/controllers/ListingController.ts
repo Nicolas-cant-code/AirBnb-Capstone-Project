@@ -131,4 +131,17 @@ export class ListingController {
       next(e);
     }
   }
+
+  static async searchForListing(req, res, next) {
+    const guests = req.query.guests;
+    const hotel = req.query.hotel;
+    const checkIn = req.query.check_in;
+    const checkOut = req.query.check_out;
+
+    try {
+      // const searched = await Listing.find({type:hotel}).where(guests > )
+    } catch (e) {
+      next(e);
+    }
+  }
 }

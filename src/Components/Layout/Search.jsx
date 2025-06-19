@@ -66,9 +66,11 @@ const Search = () => {
               <option value="" selected disabled>
                 Select Hotel
               </option>
-              <option value="Motel">Motel</option>
               <option value="Home">Home</option>
+              <option value="Apartment">Apartment</option>
               <option value="Condo">Condo</option>
+              <option value="Villa">Villa</option>
+              <option value="Cottage">Cottage</option>
             </select>
           </div>
           <div className="lg:block hidden">
