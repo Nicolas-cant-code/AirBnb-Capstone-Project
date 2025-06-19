@@ -82,8 +82,6 @@ const ViewListings = () => {
     naviagate(`/edit/listing/${element._id}`, { state: { listing: element } });
   };
 
-  console.log(listings);
-
   return (
     <div>
       <div className="px-4">
