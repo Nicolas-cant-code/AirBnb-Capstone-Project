@@ -13,17 +13,20 @@ import Calendar from "../../Layout/Calendar";
 import Comment from "../../Layout/Comment";
 import Progressbar from "../../Layout/Progressbar";
 import Explore from "../../Layout/Explore";
+import { useLocation } from "react-router-dom";
 
-const ListingPage = ({ id }) => {
+const ListingPage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const typeOfUser = user ? user.type : null;
 
+  const location = useLocation();
+  const listing = location.state?.listing || null;
+  console.log(listing);
   return (
     <div>
       <div className="px-6">
         <Nav type={"listing"} />
         <div className="mb-10">
-          <h1 className="mb-3">{"Cape Town Getaway"}</h1>
+          <h1 className="mb-3">{listing.title}</h1>
           <div className="flex justify-between items-center">
             <div className="flex align-items-center gap-2 fw-semibold text-gray-400">
               <StarTwoToneIcon className="text-red-500 pr-1" />
@@ -36,9 +39,7 @@ const ListingPage = ({ id }) => {
               </p>
               <p className="hidden md:block">Superhost</p>
               <p className="hidden md:block">•</p>
-              <p className="hidden md:block">
-                {"Cape Town"}, {"South Africa"}
-              </p>
+              <p className="hidden md:block">{listing.location}</p>
             </div>
             <div className="flex align-items-center gap-4 fw-semibold text-gray-950">
               <p className="flex items-center gap-1">
@@ -91,7 +92,8 @@ const ListingPage = ({ id }) => {
               <span>
                 <h2>Entire rental unit hosted by Sarah</h2>
                 <p className="text-gray-400">
-                  2 guests • 1 bedroom • 1 bed • 1.5 baths
+                  {listing.bedrooms} - {listing.bedrooms * 2} guests •{" "}
+                  {listing.bedrooms} bedroom • {listing.bathrooms} baths
                 </p>
               </span>
               <span className="relative">
@@ -117,6 +119,7 @@ const ListingPage = ({ id }) => {
                 charms of the city thanks to its ideal location. Close to many
                 shops, bars and restaurants, you can access the apartment by
                 tram A and C and bus routes 34 and 56.
+                {listing.description}
               </p>
             </div>
             <div className="py-4 border-b-2 border-gray-300/40 fw-semibold">
@@ -132,7 +135,10 @@ const ListingPage = ({ id }) => {
             <div className="py-4 border-b-2 border-gray-300/40">
               <h3>What this place offers</h3>
               <div className="grid grid-cols-2 gap-2 fw-semibold">
-                <TagOffers slot={"Free parking"} />
+                {listing.tags.map((tag, index) => (
+                  <TagOffers key={index} slot={tag} />
+                ))}
+                {/* <TagOffers slot={"Free parking"} />
                 <TagOffers slot={"Kitchen"} />
                 <TagOffers slot={"WiFi"} />
                 <TagOffers slot={"Pets Allowed"} />
@@ -141,7 +147,7 @@ const ListingPage = ({ id }) => {
                 <TagOffers slot={"Security cameras on property"} />
                 <TagOffers slot={"Pool"} />
                 <TagOffers slot={"Bicycle"} />
-                <TagOffers slot={"Fridge"} />
+                <TagOffers slot={"Fridge"} /> */}
                 <span className="mt-4 border-2 border-gray-400 w-fit rounded-50 shadow-md/25 hover:scale-102 duration-300">
                   <Button slot={"Show all amenities"} />
                 </span>
@@ -303,7 +309,14 @@ const ListingPage = ({ id }) => {
               </div>
             </div>
           </div>
-          <PaymentCard user={user} />
+          <PaymentCard
+            user={user}
+            price={listing.price}
+            bedrooms={listing.bedrooms}
+            cleaning={listing.cleaning}
+            service={listing.service}
+            host={listing.hostId}
+          />
         </div>
       </div>
       <Explore padding={"px-6"} />

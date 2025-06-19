@@ -24,8 +24,10 @@ export class ListingValidator {
       body("price", "Price is required").isNumeric(),
       body("location", "Location is required").isString(),
       body("description", "Description is required").isString(),
-      body("bedrooms", "atleast 1 bedroom is required").isNumeric(),
-      body("bathrooms", "atleast 1 bathroom is required").isNumeric(),
+      body("bedrooms", "Atleast 1 bedroom is required").isNumeric(),
+      body("bathrooms", "Atleast 1 bathroom is required").isNumeric(),
+      body("cleaning", "Cleaning is either true or false").isBoolean(),
+      body("service", "Service is either true or false").isBoolean(),
     ];
   }
 }

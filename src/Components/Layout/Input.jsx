@@ -34,7 +34,7 @@ const Input = ({
           required={required}
           onChange={onChange}
           name={id || null}
-          value={value || ""}
+          value={value}
         />
       ) : type === "file" ? (
         <input
@@ -49,7 +49,7 @@ const Input = ({
          hover:file:bg-blue-100"`}
           required={required}
           name={id || null}
-          value={value || ""}
+          value={value}
         />
       ) : type === "select" ? (
         <select
@@ -59,7 +59,7 @@ const Input = ({
           name={id || null}
           required={required}
           onChange={onChange}
-          value={value || ""}
+          value={value}
         >
           <option value="" selected disabled></option>
           <option value="Home">Home</option>
@@ -76,7 +76,7 @@ const Input = ({
           name={id || null}
           required={required}
           onChange={onChange}
-          value={value || ""}
+          value={value}
         >
           <option value="" selected disabled>
             Please Select
@@ -95,7 +95,7 @@ const Input = ({
           className={`text-black border-gray-700 border-2 p-3 rounded-2 w-[200px] sm:w-[250px] md:w-[350px] xl:w-[500px] outline-red-600 ${styles}`}
           required={required}
           name={id || null}
-          value={value || ""}
+          value={value}
           min={1}
         />
       )}

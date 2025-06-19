@@ -32,6 +32,8 @@ const EditListing = () => {
     price: listing.price || "",
     amenities: listing.amenities || "",
     host_id: user._id || "",
+    service: listing.service || false,
+    cleaning: listing.cleaning || false,
   });
 
   const [images, setImages] = useState(listing.images || []);
@@ -111,6 +113,10 @@ const EditListing = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    if (e.target.name === "service" || e.target.name === "cleaning") {
+      // Toggle boolean values for service and cleaning
+      setForm({ ...form, [e.target.name]: e.target.checked });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -126,12 +132,19 @@ const EditListing = () => {
       return;
     }
 
-    form.foreach(([key, value]) => {
-      if (value === "") {
-        alert(`${key} is required`);
-        return;
+    let bEmpty = false;
+
+    Object.entries(form).forEach(([key, value]) => {
+      if (key !== "service" || key !== "cleaning") {
+        if (value === "") {
+          alert(`${key} is required`);
+          bEmpty = true;
+          return;
+        }
       }
     });
+
+    if (bEmpty) return;
 
     const formData = new FormData();
 
@@ -280,6 +293,42 @@ const EditListing = () => {
                 styles={"w-[135px] absolute right-0 bottom-6"}
               />
             </div>
+            <div className="flex justify-between items-center gap-2">
+              <div className="w-50 flex items-center gap-3">
+                <label className="text-indigo-500 fs-5 md:fs-4 fw-semibold mb-1">
+                  Service:
+                </label>
+                <input
+                  name="cleaning"
+                  type="checkbox"
+                  className="scale-200"
+                  onChange={(e) => handleChange(e)}
+                  style={{ accentColor: "rgb(255, 63,71)" }}
+                  onClick={() => {
+                    form.service = !form.service;
+                    setForm({ ...form });
+                  }}
+                  checked={form.service}
+                />
+              </div>
+              <div className="w-50 flex items-center gap-3">
+                <label className="text-indigo-500 fs-5 md:fs-4 fw-semibold mb-1">
+                  Cleaning:
+                </label>
+                <input
+                  type="checkbox"
+                  name="cleaning"
+                  className="scale-200"
+                  onChange={(e) => handleChange(e)}
+                  style={{ accentColor: "rgb(255, 63,71)" }}
+                  onClick={() => {
+                    form.cleaning = !form.cleaning;
+                    setForm({ ...form });
+                  }}
+                  checked={form.cleaning}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col align-items-center mb-5 relative">
@@ -316,6 +365,10 @@ const EditListing = () => {
               styles={
                 "w-[25vw] max-w-[400px] min-w-[200px] mt-5 bg-red-600 hover:bg-red-700"
               }
+              onClick={() => {
+                alert("Changes will not be saved");
+                navigate("/view/listings");
+              }}
             />
           </span>
         </div>

@@ -19,6 +19,8 @@ export class ListingController {
     try {
       let listingData = {
         listing_name: listing.listing_name,
+        service: listing.service,
+        cleaning: listing.cleaning,
         location: listing.location,
         type: listing.type,
         description: listing.description,
@@ -102,6 +104,8 @@ export class ListingController {
         listing_name: listing.listing_name,
         location: listing.location,
         type: listing.type,
+        service: listing.service,
+        cleaning: listing.cleaning,
         description: listing.description,
         price: parseInt(listing.price),
         bedrooms: parseInt(listing.bedrooms),

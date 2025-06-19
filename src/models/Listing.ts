@@ -17,6 +17,9 @@ const listingSchema = new mongoose.Schema({
   bedrooms: { type: Number, required: true },
   bathrooms: { type: Number, required: true },
 
+  service: { type: Boolean, required: true },
+  cleaning: { type: Boolean, required: true },
+
   images: { type: [String], required: true },
   amenities: { type: [String], required: true },
 

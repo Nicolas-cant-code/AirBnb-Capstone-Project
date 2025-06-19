@@ -3,23 +3,13 @@ import StarTwoToneIcon from "@mui/icons-material/StarTwoTone";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import OutlinedFlagTwoToneIcon from "@mui/icons-material/OutlinedFlagTwoTone";
 
-const PaymentCard = ({
-  img,
-  price,
-  title,
-  table,
-  rating,
-  tags,
-  reviewCount,
-  description,
-  user,
-}) => {
+const PaymentCard = ({ price, user, bedrooms, cleaning, service, host }) => {
   return (
     <div className="mb-4">
       <div className="p-4 shadow-xl/25 rounded-3 min-w-[370px]">
         <div className="flex justify-between mb-3">
           <span>
-            <strong className="fs-5">R{3500}</strong> / night
+            <strong className="fs-5">R{price}</strong> / night
           </span>
           <span className="flex">
             <StarTwoToneIcon
@@ -72,25 +62,25 @@ const PaymentCard = ({
         <div className="mb-3 pb-2 border-b-2 border-gray-600/30 flex flex-col gap-2 fw-semibold">
           <div className="flex justify-between">
             <span>
-              {3500} x {7} nights
+              {price} x {7} nights
             </span>
-            <span>R{3500 * 7}</span>
+            <span>R{price * 7}</span>
           </div>
           <div className="flex justify-between">
             <span>Weekly discount</span>
-            <span className="text-green-500">-R{Math.ceil(3500 * 0.05)}</span>
+            <span className="text-green-500">-R{Math.ceil(price * 0.05)}</span>
           </div>
           <div className="flex justify-between">
             <span>Cleaning fee</span>
-            <span>R{Math.ceil(3500 * 0.08)}</span>
+            <span>R{cleaning ? Math.ceil(price * 0.08) : 0}</span>
           </div>
           <div className="flex justify-between">
             <span>Service fee</span>
-            <span>R{Math.ceil(3500 * 0.1)}</span>
+            <span>R{service ? Math.ceil(price * 0.1) : 0}</span>
           </div>
           <div className="flex justify-between">
             <span>Occupancy taxes and fees</span>
-            <span>R{Math.ceil(3500 * 0.055)}</span>
+            <span>R{Math.ceil(price * 0.055)}</span>
           </div>
         </div>
         <div className="flex justify-between fs-5 fw-semibold">
@@ -98,7 +88,11 @@ const PaymentCard = ({
           <span>
             R
             {Math.ceil(
-              3500 * 7 - 3500 * 0.05 + 3500 * 0.08 + 3500 * 0.1 + 3500 * 0.055
+              price * 7 -
+                price * 0.05 +
+                (cleaning ? price * 0.08 : 0) +
+                (service ? price * 0.1 : 0) +
+                price * 0.055
             )}
           </span>
         </div>

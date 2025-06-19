@@ -24,6 +24,8 @@ const CreateListing = () => {
     price: "",
     amenities: "",
     images: [],
+    service: false,
+    cleaning: false,
     host_id: user._id || "",
   });
 
@@ -53,6 +55,10 @@ const CreateListing = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    if (e.target.name === "service" || e.target.name === "cleaning") {
+      // Toggle boolean values for service and cleaning
+      setForm({ ...form, [e.target.name]: e.target.checked });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -197,6 +203,32 @@ const CreateListing = () => {
                 styles={"w-[135px] absolute right-0 bottom-6"}
               />
             </div>
+            <div className="flex justify-between items-center gap-2">
+              <div className="w-50 flex items-center gap-3">
+                <label className="text-indigo-500 fs-5 md:fs-4 fw-semibold mb-1">
+                  Service:
+                </label>
+                <input
+                  type="checkbox"
+                  name="service"
+                  className="scale-200"
+                  onChange={(e) => handleChange(e)}
+                  style={{ accentColor: "rgb(255, 63,71)" }}
+                />
+              </div>
+              <div className="w-50 flex items-center gap-3">
+                <label className="text-indigo-500 fs-5 md:fs-4 fw-semibold mb-1">
+                  Cleaning:
+                </label>
+                <input
+                  type="checkbox"
+                  name="cleaning"
+                  className="scale-200"
+                  onChange={(e) => handleChange(e)}
+                  style={{ accentColor: "rgb(255, 63,71)" }}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col align-items-center mb-5 relative">
@@ -233,6 +265,10 @@ const CreateListing = () => {
               styles={
                 "w-[25vw] max-w-[400px] min-w-[200px] mt-5 bg-red-600 hover:bg-red-700"
               }
+              onClick={() => {
+                alert("Listing creation cancelled.");
+                navigate("/view/listings");
+              }}
             />
           </span>
         </div>

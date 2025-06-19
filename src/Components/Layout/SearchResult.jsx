@@ -15,12 +15,32 @@ const SearchResult = ({
   price,
   favourite,
   user,
+  hostId,
   id,
+  service,
+  cleaning,
 }) => {
   const navigate = useNavigate();
 
   const handleListingClick = () => {
-    navigate(`/listing/${id}`);
+    navigate(`/listing/${id}`, {
+      state: {
+        listing: {
+          images,
+          title,
+          tags,
+          location,
+          bedrooms,
+          service,
+          cleaning,
+          bathrooms,
+          type,
+          price,
+          id,
+          hostId,
+        },
+      },
+    });
   };
 
   return (
@@ -29,11 +49,11 @@ const SearchResult = ({
       onClick={() => handleListingClick()}
     >
       <div className="pr-5">
-        <img
+        {/* <img
           src={`/${images[0]}`}
           alt={title}
           className="max-w-[270px] sm:max-w-[300px] max-h-[180px] sm:max-h-[200px] rounded-xl"
-        />
+        /> */}
       </div>
       <div className="flex flex-col w-full">
         <div className="flex justify-between">

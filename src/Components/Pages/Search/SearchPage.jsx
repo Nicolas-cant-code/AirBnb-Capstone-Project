@@ -4,6 +4,9 @@ import NavTags from "../../Layout/NavTags";
 import SearchResult from "../../Layout/SearchResult";
 
 const SearchPage = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const type = user ? user.type : null;
   return (
     <div className="px-4">
       <div className="bg-white">
@@ -23,6 +26,8 @@ const SearchPage = () => {
           description={"3-6 guests · 3 bed · 2 bath"}
           price={"3,500"}
           reviewCount={120}
+          type={type}
+          user={user}
           id={1}
         />
         <SearchResult
@@ -33,7 +38,9 @@ const SearchPage = () => {
           rating={"4.5"}
           description={"3-6 guests · 3 bed · 2 bath"}
           price={"4,500"}
+          type={type}
           reviewCount={120}
+          user={user}
           id={2}
         />
         <SearchResult
@@ -45,6 +52,8 @@ const SearchPage = () => {
           description={"3-6 guests · 3 bed · 2 bath"}
           price={"7,200"}
           reviewCount={120}
+          type={type}
+          user={user}
           id={3}
         />
       </div>

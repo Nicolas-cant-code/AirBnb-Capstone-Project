@@ -82,6 +82,8 @@ const ViewListings = () => {
     naviagate(`/edit/listing/${element._id}`, { state: { listing: element } });
   };
 
+  console.log(listings);
+
   return (
     <div>
       <div className="px-4">
@@ -103,11 +105,14 @@ const ViewListings = () => {
               location={element.location}
               tags={element.amenities || ""}
               description={element.description}
+              service={element.service}
+              cleaning={element.cleaning}
               price={element.price}
               id={element._id}
               bathrooms={element.bathrooms}
               bedrooms={element.bedrooms}
               user={user}
+              hostId={hostId}
             />
             <div className="flex flex-col pb-4">
               <BlueButton
