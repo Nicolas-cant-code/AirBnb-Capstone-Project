@@ -20,7 +20,6 @@ const ListingPage = () => {
 
   const location = useLocation();
   const listing = location.state?.listing || null;
-  console.log(listing);
   return (
     <div>
       <div className="px-6">
@@ -138,16 +137,6 @@ const ListingPage = () => {
                 {listing.tags.map((tag, index) => (
                   <TagOffers key={index} slot={tag} />
                 ))}
-                {/* <TagOffers slot={"Free parking"} />
-                <TagOffers slot={"Kitchen"} />
-                <TagOffers slot={"WiFi"} />
-                <TagOffers slot={"Pets Allowed"} />
-                <TagOffers slot={"Dryer"} />
-                <TagOffers slot={"Central air conditioning"} />
-                <TagOffers slot={"Security cameras on property"} />
-                <TagOffers slot={"Pool"} />
-                <TagOffers slot={"Bicycle"} />
-                <TagOffers slot={"Fridge"} /> */}
                 <span className="mt-4 border-2 border-gray-400 w-fit rounded-50 shadow-md/25 hover:scale-102 duration-300">
                   <Button slot={"Show all amenities"} />
                 </span>
@@ -316,7 +305,7 @@ const ListingPage = () => {
             cleaning={listing.cleaning}
             service={listing.service}
             host={listing.hostId}
-            listing_id={listing._id}
+            listing_id={listing.id}
           />
         </div>
       </div>
