@@ -19,7 +19,9 @@ const Search = () => {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
     if (!checkinDate || !checkoutDate) {
       alert("Please select both check-in and check-out dates.");
       return;
@@ -41,14 +43,45 @@ const Search = () => {
       return;
     }
 
-    navigate("/search", {
-      state: {
-        checkinDate,
-        checkoutDate,
-        guests,
-        hotel,
-      },
-    });
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/listing/search/listings?guests=${guests}&check_in=${checkinDate}&check_out=${checkoutDate}&hotel=${hotel}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: JSON.stringify({
+            checkinDate,
+            checkoutDate,
+            guests,
+            hotel,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Failed to fetch listings");
+        return;
+      }
+
+      if (!data) {
+        alert("No listings found");
+        return;
+      }
+
+      navigate("/search", {
+        state: {
+          listings: data,
+        },
+      });
+    } catch (err) {
+      alert(
+        "An error occurred while processing your search. Please try again."
+      );
+    }
   };
 
   return (
@@ -124,7 +157,7 @@ const Search = () => {
             style={{ boxSizing: "content-box" }}
             className="cursor-pointer bg-danger rounded-circle p-3 text-white
             absolute right-[44vw] xl:right-42 top-42 xl:top-25"
-            onClick={handleSearch}
+            onClick={(e) => handleSearch(e)}
           />
         </div>
       </div>

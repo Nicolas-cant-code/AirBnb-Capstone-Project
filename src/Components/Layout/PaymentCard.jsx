@@ -68,19 +68,21 @@ const PaymentCard = ({
       return;
     }
 
-    const formData = new FormData();
-    formData.append("checkin", checkinDate);
-    formData.append("checkout", checkoutDate);
-    formData.append("total", totalPrice);
-    formData.append("username", user.username);
-    formData.append("user_id", user._id);
-    formData.append("host_id", host._id);
-    formData.append("listing_id", listing_id);
-
     try {
       const res = await fetch("http://localhost:3000/api/reservation/create", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          check_in: checkinDate,
+          check_out: checkoutDate,
+          total: totalPrice,
+          username: user.username,
+          user_id: user._id,
+          host_id: host,
+          listing_id: listing_id,
+        }),
       });
 
       const data = await res.json();
@@ -178,7 +180,7 @@ const PaymentCard = ({
                 ? "bg-gray-500"
                 : "bg-red-500 hover:bg-red-600 hover:scale-103"
             } text-white py-2 w-full rounded-3 duration-300`}
-            disabled={user.type === "host" ? false : true}
+            disabled={user.type === "host" ? true : false}
             onClick={(e) => handleReserve(e)}
           >
             Reserve

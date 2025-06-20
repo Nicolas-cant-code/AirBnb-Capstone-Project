@@ -1,5 +1,6 @@
 import Listing from "../models/Listing";
 import { validationResult } from "express-validator";
+import Reservation from "../models/Reservation";
 
 export class ListingController {
   static async createListing(req, res, next) {
@@ -133,13 +134,58 @@ export class ListingController {
   }
 
   static async searchForListing(req, res, next) {
-    const guests = req.query.guests;
+    const guests = parseInt(req.query.guests);
     const hotel = req.query.hotel;
     const checkIn = req.query.check_in;
     const checkOut = req.query.check_out;
 
     try {
-      // const searched = await Listing.find({type:hotel}).where(guests > )
+      if (!guests || !hotel || !checkIn || !checkOut) {
+        return res
+          .status(400)
+          .json({ message: "All search parameters are required" });
+      }
+
+      let listings = await Listing.find({
+        type: hotel,
+        $expr: {
+          $and: [
+            { $gte: [{ $multiply: ["$bedrooms", 2] }, guests] }, // bedrooms * 2 >= guests
+            { $lte: ["$bedrooms", guests] }, // bedrooms <= guests
+          ],
+        },
+      });
+
+      if (listings.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No listings support that amount of guests" });
+      }
+
+      const reservationDates = await Reservation.find({
+        listing_id: { $in: listings.map((listing) => listing._id) },
+      });
+
+      listings = listings.filter((listing) => {
+        return !reservationDates.some((reservation) => {
+          return (
+            reservation.listing_id.toString() === listing._id.toString() &&
+            ((new Date(checkIn) >= new Date(reservation.check_in) &&
+              new Date(checkIn) <= new Date(reservation.check_out)) ||
+              (new Date(checkOut) >= new Date(reservation.check_in) &&
+                new Date(checkOut) <= new Date(reservation.check_out)))
+          );
+        });
+      });
+
+      if (listings.length === 0) {
+        return res.status(404).json({
+          message:
+            "No listings available with those dates. Please select different dates",
+        });
+      }
+
+      res.json(listings);
     } catch (e) {
       next(e);
     }
