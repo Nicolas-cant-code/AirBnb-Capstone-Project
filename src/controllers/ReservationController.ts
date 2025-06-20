@@ -72,9 +72,19 @@ export class ReservationController {
         return res.status(400).json({ message: "Host ID is required" });
       }
 
-      const reservations = await Reservation.find({ host_id: host_id });
+      const reservations = await Reservation.find({
+        host_id: host_id,
+      }).populate("listing_id");
+      const reservationsWithListingName = reservations.map((r) => {
+        const listing: any =
+          r.listing_id && typeof r.listing_id === "object" ? r.listing_id : {};
+        return {
+          ...r.toObject(),
+          listing_name: listing.listing_name || "",
+        };
+      });
 
-      res.send(reservations);
+      res.send(reservationsWithListingName);
     } catch (e) {
       next(e);
     }
@@ -95,6 +105,4 @@ export class ReservationController {
       next(e);
     }
   }
-
-  static async updateReservation(req, res, next) {}
 }
