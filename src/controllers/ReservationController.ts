@@ -1,4 +1,3 @@
-import Listing from "../models/Listing";
 import Reservation from "../models/Reservation";
 import { validationResult } from "express-validator";
 
@@ -106,6 +105,4 @@ export class ReservationController {
       next(e);
     }
   }
-
-  static async updateReservation(req, res, next) {}
 }
