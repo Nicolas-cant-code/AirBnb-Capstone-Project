@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StarTwoToneIcon from "@mui/icons-material/StarTwoTone";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import OutlinedFlagTwoToneIcon from "@mui/icons-material/OutlinedFlagTwoTone";
@@ -17,6 +17,7 @@ const PaymentCard = ({
   const [guests, setGuests] = useState(bedrooms);
   const [checkinDate, setCheckinDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
+  const [length, setLength] = useState(1);
 
   const navigate = useNavigate();
 
@@ -28,6 +29,15 @@ const PaymentCard = ({
       setCheckoutDate(date);
     }
   };
+
+  useEffect(() => {
+    if (checkinDate && checkoutDate) {
+      const nights = Math.ceil(
+        (new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24)
+      );
+      setLength(isNaN(nights) || nights < 1 ? 1 : nights);
+    }
+  }, [checkinDate, checkoutDate]);
 
   const handleReserve = async (e) => {
     e.preventDefault();
@@ -47,17 +57,18 @@ const PaymentCard = ({
       return;
     }
 
-    const length = Math.ceil(
-      (new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24)
-    );
-    const totalPrice =
+    setLength(
       Math.ceil(
-        price * 7 -
-          price * 0.05 +
-          (cleaning ? price * 0.08 : 0) +
-          (service ? price * 0.1 : 0) +
-          price * 0.055
-      ) * guests;
+        (new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24)
+      )
+    );
+    const totalPrice = Math.ceil(
+      price * length * guests -
+        price * 0.05 * length * guests +
+        (cleaning ? price * 0.08 : 0) +
+        (service ? price * 0.1 : 0) +
+        price * 0.055 * length
+    );
 
     if (!length) {
       alert("Something went wrong with your dates, please try again.");
@@ -197,14 +208,16 @@ const PaymentCard = ({
         <div className="mb-3 pb-2 border-b-2 border-gray-600/30 flex flex-col gap-2 fw-semibold">
           <div className="flex justify-between items-center">
             <span>
-              R{price} x {7} nights
+              R{price} x {length} nights
               <br />x {guests} guest/s
             </span>
-            <span>R{price * 7 * guests}</span>
+            <span>R{price * length * guests}</span>
           </div>
           <div className="flex justify-between">
             <span>Weekly discount</span>
-            <span className="text-green-500">-R{Math.ceil(price * 0.05)}</span>
+            <span className="text-green-500">
+              -R{Math.ceil(price * 0.05 * length * guests)}
+            </span>
           </div>
           <div className="flex justify-between">
             <span>Cleaning fee</span>
@@ -216,7 +229,7 @@ const PaymentCard = ({
           </div>
           <div className="flex justify-between">
             <span>Occupancy taxes and fees</span>
-            <span>R{Math.ceil(price * 0.055)}</span>
+            <span>R{Math.ceil(price * 0.055 * length)}</span>
           </div>
         </div>
         <div className="flex justify-between fs-5 fw-semibold">
@@ -224,12 +237,12 @@ const PaymentCard = ({
           <span>
             R
             {Math.ceil(
-              price * 7 -
-                price * 0.05 +
+              price * length * guests -
+                price * 0.05 * length * guests +
                 (cleaning ? price * 0.08 : 0) +
                 (service ? price * 0.1 : 0) +
-                price * 0.055
-            ) * guests}
+                price * 0.055 * length
+            )}
           </span>
         </div>
       </div>
