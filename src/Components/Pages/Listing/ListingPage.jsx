@@ -211,10 +211,10 @@ const ListingPage = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 mb-5">
                 <Comment number={1} />
                 <Comment number={2} />
-                <Comment number={2} />
-                <Comment number={1} />
-                <Comment number={1} />
-                <Comment number={2} />
+                <Comment number={4} />
+                <Comment number={6} />
+                <Comment number={5} />
+                <Comment number={3} />
               </div>
               <Button
                 slot={"Show all reviews"}

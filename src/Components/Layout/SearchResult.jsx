@@ -19,6 +19,7 @@ const SearchResult = ({
   id,
   service,
   cleaning,
+  description,
 }) => {
   const navigate = useNavigate();
 
@@ -38,6 +39,7 @@ const SearchResult = ({
           price,
           id,
           hostId,
+          description,
         },
       },
     });
