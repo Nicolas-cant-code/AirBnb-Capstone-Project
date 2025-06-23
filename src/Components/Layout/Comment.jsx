@@ -13,7 +13,7 @@ const Comment = ({ number }) => {
         </div>
         <div className="flex flex-col ml-4">
           <p className="text-gray-950 font-semibold">
-            {number % 2 == 0 ? "Jose" : "Maria"}
+            {number % 2 == 1 ? "Jose" : "Maria"}
           </p>
           <p className="text-gray-500">
             December {number % 2 == 0 ? "2022" : "2023"}
