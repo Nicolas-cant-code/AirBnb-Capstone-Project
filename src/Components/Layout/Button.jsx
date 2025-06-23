@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import TuneIcon from "@mui/icons-material/Tune";
+import Listing from "../../models/Listing";
 import { useNavigate } from "react-router-dom";
 
-const Button = ({ slot, type, style, href }) => {
+const Button = ({ slot, type, style, href, setSearchParams, id }) => {
   const navigate = useNavigate();
   const [openPrice, setOpenPrice] = useState(false);
   const [openType, setOpenType] = useState(false);
@@ -28,6 +29,81 @@ const Button = ({ slot, type, style, href }) => {
       setOpenPrice(false);
     }
   });
+
+  const handleTypeClick = async (e) => {
+    const selectedType = e.target.value;
+
+    const response = await fetch(
+      `http://localhost:3000/api/listing/get/listing/filter?type=${selectedType}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      alert("No Listings found. Please try a different value.");
+      return;
+    }
+
+    const listings = await response.json();
+    setSearchParams(listings);
+    setOpenType(false);
+  };
+
+  const handlePriceClick = async (e) => {
+    const selectedPrice = e.target.value;
+
+    console.log(selectedPrice);
+    if (selectedPrice !== "5000") {
+      const response = await fetch(
+        `http://localhost:3000/api/listing/get/listing/filter?min=${selectedPrice}&max=${
+          parseInt(selectedPrice) + 999
+        }`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        alert("No Listings found. Please try a different value.");
+        return;
+      }
+
+      const listings = await response.json();
+      setSearchParams(listings);
+    } else {
+      const response = await fetch(
+        `http://localhost:3000/api/listing/get/listing/filter?min=${selectedPrice}&max=${
+          parseInt(selectedPrice) + 100000000
+        }`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        alert("No Listings found. Please try a different value.");
+        return;
+      }
+
+      const listings = await response.json();
+      setSearchParams(listings);
+    }
+    setOpenPrice(false);
+  };
+
   return (
     <div
       onClick={
@@ -61,8 +137,11 @@ const Button = ({ slot, type, style, href }) => {
           </div>
         )}
       </div>
-      {type === "dropdown" && slot !== "Price" && openType ? (
-        <div className="absolute top-100 bg-gray-100 p-1 rounded-xl w-full left-0 text-center cursor-pointer fw-semibold z-10">
+      {type === "dropdown" && id === "type" && openType ? (
+        <div
+          className="absolute top-100 bg-gray-100 p-1 rounded-xl w-full left-0 text-center cursor-pointer fw-semibold z-10"
+          onClick={(e) => handleTypeClick(e)}
+        >
           <option
             value="Home"
             className="hover:bg-gray-200 hover:text-red-600 rounded-t-xl"
@@ -94,8 +173,11 @@ const Button = ({ slot, type, style, href }) => {
             Cottage
           </option>
         </div>
-      ) : type === "dropdown" && slot === "Price" && openPrice ? (
-        <div className="absolute top-100 bg-gray-100 p-1 rounded-xl w-fit left-0 text-center cursor-pointer fw-semibold z-10">
+      ) : type === "dropdown" && id === "price" && openPrice ? (
+        <div
+          className="absolute top-100 bg-gray-100 p-1 rounded-xl w-fit left-0 text-center cursor-pointer fw-semibold z-10"
+          onClick={(e) => handlePriceClick(e)}
+        >
           <option
             value="0"
             className="hover:bg-gray-200 hover:text-red-600 rounded-t-xl"

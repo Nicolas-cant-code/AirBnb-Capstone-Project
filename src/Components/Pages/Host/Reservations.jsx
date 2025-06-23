@@ -6,21 +6,28 @@ import BlueButton from "../../Layout/BlueButton";
 import Footer from "../../Layout/Footer";
 
 const Reservations = () => {
-  const host = JSON.parse(localStorage.getItem("user"));
-  const hostId = host ? host._id : null;
+  const user = JSON.parse(localStorage.getItem("user"));
+  let hostId = "";
+  let userId = "";
+
+  if (user && user.type !== "host") {
+    userId = user ? user._id : null;
+  } else if (user && user.type == "host") {
+    hostId = user ? user._id : null;
+  }
 
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
-    if (!hostId) {
-      alert("Host ID not found. Please relog in as a host.");
+    if (!user) {
+      alert("User not found. Please relog in.");
       return;
     }
 
     const getReservation = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/reservation/get/reservations/?host_id=${hostId}`
+          `http://localhost:3000/api/reservation/get/reservations/?host_id=${hostId}&user_id=${userId}`
         );
 
         const data = await response.json();
@@ -36,7 +43,7 @@ const Reservations = () => {
     };
 
     getReservation();
-  }, [hostId]);
+  }, []);
 
   const deleteReservation = async (e, id) => {
     e.preventDefault();
@@ -84,42 +91,59 @@ const Reservations = () => {
         <Nav type={"create"} />
       </div>
       <div className="flex flex-col sm:flex-row gap-3 px-5 align-items-center border-b-2 border-gray-700/25 pb-4 mb-5">
-        {/* <Button slot={"View Reservations"} href={"/view/reservations"} /> */}
-        <Button slot={"View listings"} href={"/view/listings"} />
-        <Button slot={"Create listing"} href={"/create/listing"} />
+        {user.type === "host" ? (
+          <>
+            <Button slot={"View listings"} href={"/view/listings"} />
+            <Button slot={"Create listing"} href={"/create/listing"} />
+          </>
+        ) : (
+          <>
+            <Button slot={"Home"} href={"/"} />
+          </>
+        )}
       </div>
       <div className="px-3 sm:px-4 mt-5 text-sm md:text-xl fw-semibold">
-        <p className="mb-2">My Reservations</p>
+        <p className="mb-3">My Reservations</p>
         <div className="mb-5">
-          <table className="w-full text-left border-collapse border-3 border-gray-300">
-            <thead>
-              <tr>
-                <TableField slot={"Booked by"} />
-                <TableField slot={"Property"} />
-                <TableField slot={"Check-in Date"} />
-                <TableField slot={"Check-out Date"} />
-                <TableField slot={"Actions"} />
-              </tr>
-            </thead>
-            <tbody>
-              {reservations.map((element) => (
-                <tr key={element._id}>
-                  <TableField slot={element.username} />
-                  <TableField slot={element.listing_name} />
-                  <TableField slot={formatDate(element.check_in)} />
-                  <TableField slot={formatDate(element.check_out)} />
-                  <td className="px-2 py-1 border-2 border-gray-300">
-                    <BlueButton
-                      slot={"Delete"}
-                      table
-                      styles={"bg-red-600 hover:bg-red-700 w-100"}
-                      onClick={(e) => deleteReservation(e, element._id)}
-                    />
-                  </td>
+          {reservations.length !== 0 ? (
+            <table className="w-full text-left border-collapse border-3 border-gray-300">
+              <thead>
+                <tr>
+                  <TableField slot={"Booked by"} />
+                  <TableField slot={"Property"} />
+                  <TableField slot={"Check-in Date"} />
+                  <TableField slot={"Check-out Date"} />
+                  <TableField slot={"Actions"} />
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {reservations.map((element) => (
+                  <tr key={element._id}>
+                    <TableField slot={element.username} />
+                    <TableField slot={element.listing_name} />
+                    <TableField slot={formatDate(element.check_in)} />
+                    <TableField slot={formatDate(element.check_out)} />
+                    <td className="px-2 py-1 border-2 border-gray-300">
+                      <BlueButton
+                        slot={"Delete"}
+                        table
+                        styles={"bg-red-600 hover:bg-red-700 w-100"}
+                        onClick={(e) => deleteReservation(e, element._id)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div>
+              <h2 className="text-light-grey fw-semi-bold text-center pt-4 pb-5 mb-5">
+                {user.type === "host"
+                  ? "- You Have No Reservations Yet -"
+                  : "- Bookings Will Appear Here Once Made -"}
+              </h2>
+            </div>
+          )}
         </div>
       </div>
       <div>

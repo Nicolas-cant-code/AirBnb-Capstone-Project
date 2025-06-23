@@ -54,33 +54,33 @@ const ListingPage = () => {
         </div>
 
         <div className="mb-10 grid grid-cols-2 gap-4">
-          <div>
+          <div className="max-h-[600px] overflow-hidden rounded-4 hover:scale-102 duration-300 ">
             <img
-              src={"/assets/Airbnbs/Bnb1.png"}
+              src={`http://localhost:3000/${listing.images[0]}`}
               alt="Airbnb picture"
-              className="hover:scale-102 duration-300 cursor-pointer"
+              className="cursor-pointer w-full"
             />
           </div>
-          <div className="grid grid-col-1 md:grid-cols-2 gap-2">
+          <div className="grid grid-col-1 md:grid-cols-2 gap-2 max-h-[600px] overflow-hidden rounded-4">
             <img
-              src={"/assets/Airbnbs/Bnb1.png"}
+              src={`http://localhost:3000/${listing.images[0]}`}
               alt="Airbnb picture"
-              className="hover:scale-102 duration-300 cursor-pointer"
+              className="hover:scale-102 duration-300 cursor-pointer w-full overflow-hidden h-100"
             />
             <img
-              src={"/assets/Airbnbs/Bnb1.png"}
+              src={`http://localhost:3000/${listing.images[0]}`}
               alt="Airbnb picture"
-              className="hover:scale-102 duration-300 cursor-pointer hidden md:block"
+              className="hover:scale-102 duration-300 cursor-pointer  overflow-hidden h-100 w-full hidden md:block w-100"
             />
             <img
-              src={"/assets/Airbnbs/Bnb1.png"}
+              src={`http://localhost:3000/${listing.images[0]}`}
               alt="Airbnb picture"
-              className="hover:scale-102 duration-300 cursor-pointer hidden md:block"
+              className="hover:scale-102 duration-300 cursor-pointer  overflow-hidden h-100  w-full hidden md:block"
             />
             <img
-              src={"/assets/Airbnbs/Bnb1.png"}
+              src={`http://localhost:3000/${listing.images[0]}`}
               alt="Airbnb picture"
-              className="hover:scale-102 duration-300 cursor-pointer hidden md:block"
+              className="hover:scale-102 duration-300 cursor-pointer  overflow-hidden h-100  w-full hidden md:block"
             />
           </div>
         </div>
@@ -89,7 +89,9 @@ const ListingPage = () => {
           <div className="w-3/3 lg:w-3/5">
             <div className="flex justify-between items-center pb-4 border-b-2 border-gray-300/40">
               <span>
-                <h2>Entire rental unit hosted by Sarah</h2>
+                <h2>
+                  Entire {listing.type} unit hosted by {user.username}
+                </h2>
                 <p className="text-gray-400">
                   {listing.bedrooms} - {listing.bedrooms * 2} guests •{" "}
                   {listing.bedrooms} bedroom • {listing.bathrooms} baths
@@ -112,12 +114,12 @@ const ListingPage = () => {
             </div>
             <div className="py-4 border-b-2 border-gray-300/40">
               <p className="py-1 fw-semibold">
-                Come and stay in this superb duplex T2, in the heart of the
+                {/* Come and stay in this superb duplex T2, in the heart of the
                 historic center of Cape Town. Spacious and bright, in a real
                 Cape Town building in exposed stone, you will enjoy all the
                 charms of the city thanks to its ideal location. Close to many
                 shops, bars and restaurants, you can access the apartment by
-                tram A and C and bus routes 34 and 56.
+                tram A and C and bus routes 34 and 56. */}
                 {listing.description}
               </p>
             </div>
@@ -230,13 +232,16 @@ const ListingPage = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="mb-0">Hosted by Sarah</h3>
+                  <h3 className="mb-0">Hosted by {user.username}</h3>
                   <p className="text-gray-500">Joined September 2023</p>
                 </div>
               </div>
               <div className="flex gap-3 mt-3 fw-bold text-red-500 p-3 pb-2 bg-gray-100 shadow-md/30 w-fit rounded-xl hover:scale-103 duration-500 cursor-pointer">
                 <span className="flex align-center">
-                  <h4 className="fs-5 mr-2 fw-bold">12</h4> reviews
+                  <h4 className="fs-5 mr-2 fw-bold">
+                    {Math.ceil(Math.random() * 100)}
+                  </h4>{" "}
+                  reviews
                 </span>
                 <span>|</span>
                 <span>Identity verified</span>
@@ -244,7 +249,9 @@ const ListingPage = () => {
                 <span>Superhost</span>
               </div>
               <div className="flex flex-col gap-4 fw-semibold text-gray-400 mt-4">
-                <h4 className="fs-5 text-black">Sarah is a Superhost</h4>
+                <h4 className="fs-5 text-black">
+                  {user.username} is a Superhost
+                </h4>
                 <p className="max-w-[45vw]">
                   Superhosts are experienced, highly rated hosts who are
                   commited to providing neat stays for guests.

@@ -99,6 +99,7 @@ const Search = () => {
               <option value="" selected disabled>
                 Select Hotel
               </option>
+              <option value="All">All</option>
               <option value="Home">Home</option>
               <option value="Apartment">Apartment</option>
               <option value="Condo">Condo</option>

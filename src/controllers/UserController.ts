@@ -91,7 +91,7 @@ export class UserController {
       next(err);
     }
 
-    res.send(req.user);
+    // res.send(req.user);
   }
 
   static async logout(req, res, next) {

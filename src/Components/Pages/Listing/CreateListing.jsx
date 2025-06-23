@@ -122,6 +122,45 @@ const CreateListing = () => {
     }
   };
 
+  const handleAddAmenity = () => {
+    const newAmenity = document.getElementById("amenities").value.trim();
+    let amenityExists = false;
+
+    form.amenities.split(",").map(() => {
+      if (form.amenities && form.amenities.includes(newAmenity)) {
+        amenityExists = true;
+        return;
+      }
+    });
+
+    if (amenityExists) {
+      alert("Amenity already exists");
+      return;
+    }
+
+    if (newAmenity && amenityExists === false) {
+      setForm((prevForm) => ({
+        ...prevForm,
+        amenities: prevForm.amenities
+          ? `${prevForm.amenities}, ${newAmenity}`
+          : newAmenity,
+      }));
+    }
+  };
+
+  const removeAmenity = (e) => {
+    const amenityToRemove = e.target.textContent.trim().slice(0, -1); // Remove the trailing 'x'
+
+    setForm((prevForm) => ({
+      ...prevForm,
+      amenities: prevForm.amenities
+        .split(",")
+        .filter((amenity) => amenity.trim() !== amenityToRemove)
+        .join(", "),
+    }));
+    e.stopPropagation();
+  };
+
   return (
     <div className="px-4">
       <Nav type={"create"} />
@@ -190,18 +229,34 @@ const CreateListing = () => {
               onChange={(e) => handleChange(e)}
               placeholder={"Price per night"}
             />
-            <div className="flex gap-2 relative">
+            <div className="flex flex-col md:flex-row gap-3 relative items-center">
               <Input
                 slot={"Amenities"}
                 id={"amenities"}
-                onChange={(e) => handleChange(e)}
-                styles={"max-w-[26vw] lg:max-w-[28vw]"}
+                styles={"max-w-full lg:max-w-[12vw] md:max-w-[10vw]"}
                 required
               />
               <BlueButton
                 slot={"Add"}
-                styles={"w-[135px] absolute right-0 bottom-6"}
+                styles={"w-[135px]"}
+                onClick={() => handleAddAmenity()}
               />
+              <div className="border-1 border-gray-300 rounded-2 p-2 bg-gray-200 w-full max-w-full md:max-w-[13.5vw] h-[60px] overflow-x-hidden overflow-y-auto items-center">
+                {form.amenities && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {form.amenities.split(",").map((amenity, index) => (
+                      <span
+                        key={index}
+                        className="items-center flex bg-gray-700 text-white text-indigo-800 px-2 py-1 rounded-2 gap-2 text-sm hover:bg-gray-500 duration-200 cursor-pointer"
+                        onClick={(e) => removeAmenity(e)}
+                      >
+                        {amenity.trim()}
+                        <span className="pb-1">x</span>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex justify-between items-center gap-2">
               <div className="w-50 flex items-center gap-3">

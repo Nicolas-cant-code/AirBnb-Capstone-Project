@@ -31,12 +31,12 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/listing/:id" element={<ListingPage />} />
+          <Route path="/view/reservations" element={<Reservations />} />
           {type === "host" && (
             <>
               <Route path="/create/listing" element={<CreateListing />} />
               <Route path="/view/listings" element={<ViewListings />} />
               <Route path="/edit/listing/:id" element={<EditListing />} />
-              <Route path="/view/reservations" element={<Reservations />} />
             </>
           )}
           {!user && (

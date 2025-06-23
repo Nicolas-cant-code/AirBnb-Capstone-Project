@@ -67,24 +67,61 @@ export class ReservationController {
   static async getReservation(req, res, next) {
     try {
       const host_id = req.query.host_id;
+      const user_id = req.query.user_id;
 
-      if (!host_id) {
-        return res.status(400).json({ message: "Host ID is required" });
+      if ((!host_id || host_id === "") && (!user_id || user_id === "")) {
+        return res
+          .status(400)
+          .json({ message: "User not Found. Please login again" });
       }
 
-      const reservations = await Reservation.find({
-        host_id: host_id,
-      }).populate("listing_id");
-      const reservationsWithListingName = reservations.map((r) => {
-        const listing: any =
-          r.listing_id && typeof r.listing_id === "object" ? r.listing_id : {};
-        return {
-          ...r.toObject(),
-          listing_name: listing.listing_name || "",
-        };
-      });
+      if (host_id !== "") {
+        const reservations = await Reservation.find({
+          host_id: host_id,
+        })
+          .populate("listing_id")
+          .sort({ check_in: 1 });
 
-      res.send(reservationsWithListingName);
+        const reservationsWithListingName = reservations.map((r) => {
+          const listing: any =
+            r.listing_id && typeof r.listing_id === "object"
+              ? r.listing_id
+              : {};
+
+          return {
+            ...r.toObject(),
+            listing_name: listing.listing_name || "",
+          };
+        });
+
+        res.send(reservationsWithListingName);
+      } else {
+        const reservations = await Reservation.find({
+          user_id: user_id,
+        })
+          .populate("listing_id")
+          .sort({ check_in: 1 });
+
+        const reservationsWithListingName = reservations.map((r) => {
+          const listing: any =
+            r.listing_id && typeof r.listing_id === "object"
+              ? r.listing_id
+              : {};
+
+          return {
+            ...r.toObject(),
+            listing_name: listing.listing_name || "",
+          };
+        });
+
+        if (reservationsWithListingName.length === 0) {
+          return res.status(404).json({
+            message: "No reservations have been made",
+          });
+        }
+
+        res.send(reservationsWithListingName);
+      }
     } catch (e) {
       next(e);
     }

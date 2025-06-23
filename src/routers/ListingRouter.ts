@@ -27,6 +27,16 @@ class ListingRouter {
       GlobalMiddleware.checkError,
       ListingController.searchForListing
     );
+    this.router.get(
+      "/search/listings/all",
+      GlobalMiddleware.checkError,
+      ListingController.searchAllListings
+    );
+    this.router.get(
+      "/get/listing/filter",
+      GlobalMiddleware.checkError,
+      ListingController.filter
+    );
   }
 
   postRoutes() {

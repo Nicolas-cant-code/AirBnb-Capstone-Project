@@ -45,7 +45,12 @@ const PaymentCard = ({
     if (user.type === "host") {
       alert("You cannot reserve a bnb as a host");
       return;
+    } else if (!user) {
+      alert("Please log in to reserve a bnb.");
+      navigate("/login");
+      return;
     }
+
     if (!checkinDate || !checkoutDate) {
       alert("Please select both check-in and check-out dates.");
       return;

@@ -146,15 +146,28 @@ export class ListingController {
           .json({ message: "All search parameters are required" });
       }
 
-      let listings = await Listing.find({
-        type: hotel,
-        $expr: {
-          $and: [
-            { $gte: [{ $multiply: ["$bedrooms", 2] }, guests] }, // bedrooms * 2 >= guests
-            { $lte: ["$bedrooms", guests] }, // bedrooms <= guests
-          ],
-        },
-      });
+      let listings = [];
+
+      if (hotel == "All") {
+        listings = await Listing.find({
+          $expr: {
+            $and: [
+              { $gte: [{ $multiply: ["$bedrooms", 2] }, guests] }, // bedrooms * 2 >= guests
+              { $lte: ["$bedrooms", guests] }, // bedrooms <= guests
+            ],
+          },
+        });
+      } else {
+        listings = await Listing.find({
+          type: hotel,
+          $expr: {
+            $and: [
+              { $gte: [{ $multiply: ["$bedrooms", 2] }, guests] }, // bedrooms * 2 >= guests
+              { $lte: ["$bedrooms", guests] }, // bedrooms <= guests
+            ],
+          },
+        });
+      }
 
       if (listings.length === 0) {
         return res
@@ -183,6 +196,61 @@ export class ListingController {
           message:
             "No listings available with those dates. Please select different dates",
         });
+      }
+
+      res.json(listings);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async filter(req, res, next) {
+    const type = req.query.type;
+    const minPrice = parseInt(req.query.min);
+    const maxPrice = parseInt(req.query.max);
+
+    try {
+      if (type) {
+        const listings = await Listing.find({ type: type });
+
+        if (listings.length === 0) {
+          return res.status(404).json({ message: "No listings found" });
+        }
+
+        res.json(listings);
+      }
+
+      if (minPrice || maxPrice) {
+        if (minPrice && maxPrice && minPrice > maxPrice) {
+          return res.status(400).json({
+            message: "Minimum price cannot be greater than maximum price",
+          });
+        }
+
+        const listings = await Listing.find({
+          price: {
+            $gte: minPrice || 0,
+            $lte: maxPrice || Number.MAX_SAFE_INTEGER,
+          },
+        });
+
+        if (listings.length === 0) {
+          return res.status(404).json({ message: "No listings found" });
+        }
+
+        res.json(listings);
+      }
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async searchAllListings(req, res, next) {
+    try {
+      const listings = await Listing.find({});
+
+      if (listings.length === 0) {
+        return res.status(404).json({ message: "No listings found" });
       }
 
       res.json(listings);

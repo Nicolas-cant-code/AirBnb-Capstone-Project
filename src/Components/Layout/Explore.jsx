@@ -13,26 +13,17 @@ const Explore = ({ padding }) => {
           <ListingItem item={"Durban"} />
           <ListingItem item={"Pretoria"} />
           <ListingItem item={"Cape Town"} />
-          <ListingItem item={"Johannesburg"} />
-          <ListingItem item={"Durban"} />
-          <ListingItem item={"Pretoria"} />
-          <ListingItem item={"Cape Town"} />
-          <ListingItem item={"Johannesburg"} />
-          <ListingItem item={"Durban"} />
-          <ListingItem item={"Pretoria"} />
         </ul>
       </section>
       <section className="pt-4">
         <HeadingTag title={"Unique stays on Airbnb"} />
         <ul className="grid grid-cols-2 lg:grid-cols-4 gap-3 ps-0 pt-2 mb-5">
-          <ListingItem item={"Treehouse"} />
-          <ListingItem item={"Cabin"} />
+          <ListingItem item={"Home"} />
+          <ListingItem item={"Condo"} />
           <ListingItem item={"Villa"} />
-          <ListingItem item={"Castle"} />
-          <ListingItem item={"Treehouse"} />
+          <ListingItem item={"Apartment"} />
+          <ListingItem item={"Cottage"} />
           <ListingItem item={"Cabin"} />
-          <ListingItem item={"Villa"} />
-          <ListingItem item={"Castle"} />
         </ul>
       </section>
       <div>

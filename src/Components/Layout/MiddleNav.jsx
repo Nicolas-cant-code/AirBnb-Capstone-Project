@@ -4,6 +4,34 @@ import { useNavigate } from "react-router-dom";
 
 const MiddleNav = ({ type }) => {
   const navigate = useNavigate();
+
+  const handleSearchAll = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(
+      `http://localhost:3000/api/listing/search/listings/all`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.message || "Failed to fetch listings");
+      return;
+    }
+
+    if (!data) {
+      alert("No listings found");
+      return;
+    }
+
+    navigate("/search", { state: { listings: data } });
+  };
   return (
     <div>
       {type === "home" ? (
@@ -26,15 +54,18 @@ const MiddleNav = ({ type }) => {
         </div>
       ) : type === "search" ? (
         <div className="d-flex flex-coloumn align-items-center justify-content-center space-x-2 md:space-x-5 bg-white text-dark py-1 px-3 border shadow-sm rounded-50">
-          <div className="pl-0 md:pl-2 cursor-pointer">Cape Town</div>
+          <div className="pl-0 md:pl-2 cursor-pointer text-light-grey">
+            Location: All
+          </div>
           <div className="fw-light text-light-grey cursor-default">|</div>
-          <div className="text-light-grey cursor-pointer">Add dates</div>
+          <div className="text-light-grey cursor-pointer">Hotel type: All</div>
           <div className="fw-light text-light-grey cursor-default">|</div>
-          <div className="text-light-grey cursor-pointer">Add guests</div>
+          <div className="text-light-grey cursor-pointer">Guests: All</div>
           <div style={{ marginRight: "-0.5rem" }}>
             <SearchIcon
               style={{ boxSizing: "content-box" }}
               className="bg-danger rounded-circle p-2 text-gray-50 cursor-pointer hover:text-gray-300"
+              onClick={(e) => handleSearchAll(e)}
             />
           </div>
         </div>
@@ -51,7 +82,9 @@ const MiddleNav = ({ type }) => {
             <SearchIcon
               style={{ boxSizing: "content-box" }}
               className="bg-danger rounded-circle p-2 text-white"
-              onClick={() => navigate("/search")}
+              onClick={(e) => {
+                handleSearchAll(e);
+              }}
             />
           </div>
         </div>

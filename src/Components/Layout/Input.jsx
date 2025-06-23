@@ -97,6 +97,7 @@ const Input = ({
           name={id || null}
           value={value}
           min={1}
+          id={id || null}
         />
       )}
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../../Layout/Nav";
 import NavTags from "../../Layout/NavTags";
 import SearchResult from "../../Layout/SearchResult";
@@ -10,7 +10,8 @@ const SearchPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const searchParams = location.state?.listings || null;
+  const initialListings = location.state?.listings || [];
+  const [searchParams, setSearchParams] = useState(initialListings);
 
   if (!searchParams) {
     alert("No search results found. Please try again.");
@@ -21,11 +22,13 @@ const SearchPage = () => {
   return (
     <div className="px-4">
       <div className="bg-white">
-        <Nav type={"search"} />
-        <NavTags />
+        <Nav type={"search"} setSearchParams={setSearchParams} />
+        <NavTags setSearchParams={setSearchParams} />
       </div>
       <div className="pt-5 pb-4">
-        <h4 className="fs-4 text-light-grey">200+ stays in Cape Town</h4>
+        <h4 className="fs-4 text-light-grey">
+          {searchParams.length} stays in our Bnbs
+        </h4>
       </div>
       <div className="pb-3">
         {searchParams.map((element) => (

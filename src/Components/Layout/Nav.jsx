@@ -11,6 +11,8 @@ const Nav = ({ type }) => {
 
   const host = () => {
     console.log("Host clicked");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     naviagate("/signup", { state: { host: true } });
   };
 
@@ -125,32 +127,38 @@ const Nav = ({ type }) => {
                   onMouseLeave={closeModal}
                 >
                   <a
+                    className="no-underline text-white hover:bg-gray-500 p-1 pb-2 rounded-top-2"
+                    href="/view/listings"
+                  >
+                    View Listings
+                  </a>
+                  <a
                     className="no-underline text-white
-                  hover:bg-gray-500 p-1 rounded-top-2"
+                  hover:bg-gray-500 p-1 rounded-bottom-2"
                     onClick={() => {
                       handleLogout();
                     }}
                   >
                     Logout
                   </a>
-                  <a
-                    className="no-underline text-white hover:bg-gray-500 p-1 pb-2 rounded-bottom-2"
-                    href="/view/listings"
-                  >
-                    View Listings
-                  </a>
                 </div>
               ) : (
                 <div
                   className={`${
                     isModalOpen ? "block" : "hidden"
-                  } absolute top-[40px] right-0 flex flex-col bg-gray-400 w-full text-center rounded-2 z-10`}
+                  } absolute top-[40px] right-0 flex flex-col bg-gray-400 w-fit text-center rounded-2 z-10`}
                   onMouseEnter={openModal}
                   onMouseLeave={closeModal}
                 >
                   <a
+                    className="no-underline text-white hover:bg-gray-500 p-1 pb-2 rounded-top-2"
+                    href="/view/reservations"
+                  >
+                    View Reservations
+                  </a>
+                  <a
                     className="no-underline text-white
-                  hover:bg-gray-500 p-1 rounded-top-2"
+                  hover:bg-gray-500 p-1 rounded-bottom-2"
                     onClick={() => {
                       handleLogout();
                     }}
