@@ -54,7 +54,12 @@ export class Server {
   }
 
   allowCors() {
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: ["*"],
+        credentials: true,
+      })
+    );
   }
 
   setRoutes() {
