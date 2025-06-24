@@ -11,6 +11,6 @@
 [[redirects]]
   # Proxy API requests from /api/* to your Render backend API
   from = "/api/*"
-  to = "https://your-backend-service.onrender.com/api/:splat"
+  to = "https://nicolas-airbnb-capstone-project.onrender.com/api/:splat"
   status = 200
   force = true
