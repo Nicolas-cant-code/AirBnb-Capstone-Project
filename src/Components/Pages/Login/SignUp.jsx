@@ -24,14 +24,11 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(
-        "https://nicolas-airbnb-capstone-project.onrender.com/api/user/signup",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        }
-      );
+      const res = await fetch("/api/user/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
       const data = await res.json();
 

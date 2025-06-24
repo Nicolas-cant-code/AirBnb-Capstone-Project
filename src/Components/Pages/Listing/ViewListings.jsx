@@ -20,7 +20,7 @@ const ViewListings = () => {
     const fetchListings = async () => {
       try {
         const response = await fetch(
-          `https://nicolas-airbnb-capstone-project.onrender.com/api/listing/get/listings/?host_id=${hostId}`
+          `/api/listing/get/listings/?host_id=${hostId}`
         );
 
         const data = await response.json();
@@ -47,16 +47,13 @@ const ViewListings = () => {
     }
 
     try {
-      const response = await fetch(
-        `https://nicolas-airbnb-capstone-project.onrender.com/api/listing/delete?listing_id=${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await fetch(`/api/listing/delete?listing_id=${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       const data = await response.json();
 

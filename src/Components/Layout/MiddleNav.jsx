@@ -8,15 +8,12 @@ const MiddleNav = ({ type }) => {
   const handleSearchAll = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `https://nicolas-airbnb-capstone-project.onrender.com/api/listing/search/listings/all`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`/api/listing/search/listings/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     const data = await response.json();
 
