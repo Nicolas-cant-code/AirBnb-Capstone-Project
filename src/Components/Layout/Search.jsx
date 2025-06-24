@@ -45,7 +45,7 @@ const Search = () => {
 
     try {
       const response = await fetch(
-        `https://nicolas-airbnb-capstone-project.onrender.com//api/listing/search/listings?guests=${guests}&check_in=${checkinDate}&check_out=${checkoutDate}&hotel=${hotel}`,
+        `https://nicolas-airbnb-capstone-project.onrender.com/api/listing/search/listings?guests=${guests}&check_in=${checkinDate}&check_out=${checkoutDate}&hotel=${hotel}`,
         {
           method: "GET",
           headers: {

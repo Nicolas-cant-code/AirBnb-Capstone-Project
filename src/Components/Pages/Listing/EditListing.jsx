@@ -88,7 +88,7 @@ const EditListing = () => {
           dropzoneInstanceRef.current.emit(
             "thumbnail",
             mockFile,
-            "https://nicolas-airbnb-capstone-project.onrender.com//" +
+            "https://nicolas-airbnb-capstone-project.onrender.com/" +
               mockFile.dataURL,
             mockFile.name
           );
@@ -178,7 +178,7 @@ const EditListing = () => {
 
     try {
       const res = await fetch(
-        `https://nicolas-airbnb-capstone-project.onrender.com//api/listing/edit/listing/${listing._id}`,
+        `https://nicolas-airbnb-capstone-project.onrender.com/api/listing/edit/listing/${listing._id}`,
         {
           method: "PUT",
           body: formData,

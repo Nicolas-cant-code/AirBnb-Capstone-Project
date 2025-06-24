@@ -86,7 +86,7 @@ const PaymentCard = ({
 
     try {
       const res = await fetch(
-        "https://nicolas-airbnb-capstone-project.onrender.com//api/reservation/create",
+        "https://nicolas-airbnb-capstone-project.onrender.com/api/reservation/create",
         {
           method: "POST",
           headers: {

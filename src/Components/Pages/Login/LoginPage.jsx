@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     try {
       const res = await fetch(
-        `https://nicolas-airbnb-capstone-project.onrender.com//api/user/login?email=${encodeURIComponent(
+        `https://nicolas-airbnb-capstone-project.onrender.com/api/user/login?email=${encodeURIComponent(
           form.email
         )}&password=${encodeURIComponent(form.password)}`,
         {
