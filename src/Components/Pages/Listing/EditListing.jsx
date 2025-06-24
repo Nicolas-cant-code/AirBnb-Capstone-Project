@@ -38,6 +38,35 @@ const EditListing = () => {
     cleaning: listing.cleaning || false,
   });
 
+  const formatImagePath = (path) => {
+    if (!path) return "";
+
+    console.log("Formatted image path:", path);
+
+    // Remove "public" if it starts with it
+    path = path.replace(/^public[\\/]+/, "");
+
+    // Replace all backslashes with forward slashes
+    path = path.replace(/\\/g, "/");
+
+    // Remove any double leading slashes
+    path = path.replace(/^\/+/, "");
+
+    if (path[1] === "/") {
+      path = path.slice(2);
+      path = "/" + path;
+    }
+    if (path[0] === "/") {
+      path = path.slice(1);
+      path = "/" + path;
+    }
+
+    console.log("Formatted image path:", path);
+
+    // Return with exactly one slash
+    return path;
+  };
+
   console.log("Form state:", form);
 
   const [images, setImages] = useState(listing.images || []);
@@ -72,6 +101,7 @@ const EditListing = () => {
     if (images.length >= count) {
       if (listing.images && listing.images.length > 0) {
         listing.images.forEach((img, idx) => {
+          formatImagePath(img);
           const mockFile = {
             name: `Image ${idx + 1}`,
             accepted: true,
