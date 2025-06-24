@@ -25,7 +25,7 @@ const LoginPage = () => {
         )}&password=${encodeURIComponent(form.password)}`,
         {
           method: "GET",
-          Headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
