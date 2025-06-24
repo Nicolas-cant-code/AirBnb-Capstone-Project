@@ -56,7 +56,7 @@ export class Server {
   allowCors() {
     this.app.use(
       cors({
-        origin: ["*"],
+        origin: ["https://nicolas-capstone-project.netlify.app"],
         credentials: true,
       })
     );
