@@ -23,12 +23,20 @@ const SearchResult = ({
 }) => {
   const navigate = useNavigate();
 
-  const formatImagePath = (rawPath) => {
-    if (!rawPath) return "";
-    // Remove "public" and fix slashes
-    const normalized = rawPath.replace(/^public[\\/]/, "/").replace(/\\/g, "/");
-    // Ensure it starts with a single slash
-    return normalized.startsWith("/") ? normalized : "/" + normalized;
+  const formatImagePath = (path) => {
+    if (!path) return "";
+
+    // Remove "public" if it starts with it
+    path = path.replace(/^public[\\/]+/, "");
+
+    // Replace all backslashes with forward slashes
+    path = path.replace(/\\/g, "/");
+
+    // Remove any double leading slashes
+    path = path.replace(/^\/+/, "");
+
+    // Return with exactly one slash
+    return "/" + path;
   };
 
   const handleListingClick = () => {
