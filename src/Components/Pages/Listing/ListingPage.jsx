@@ -22,10 +22,11 @@ const ListingPage = () => {
   const listing = location.state?.listing || null;
 
   const formatImagePath = (rawPath) => {
-    if (!rawPath) return ""; // fallback for missing images
-
-    // Remove "public" and replace backslashes with forward slashes
-    return rawPath.replace(/^public[\\/]/, "/").replace(/\\/g, "/");
+    if (!rawPath) return "";
+    // Remove "public" and fix slashes
+    const normalized = rawPath.replace(/^public[\\/]/, "/").replace(/\\/g, "/");
+    // Ensure it starts with a single slash
+    return normalized.startsWith("/") ? normalized : "/" + normalized;
   };
 
   return (
