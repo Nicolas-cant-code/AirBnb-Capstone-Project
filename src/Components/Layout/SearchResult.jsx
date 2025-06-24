@@ -39,15 +39,17 @@ const SearchResult = ({
 
     if (path[1] === "/") {
       path = path.slice(2);
+      path = "/" + path;
     }
     if (path[0] === "/") {
       path = path.slice(1);
+      path = "/" + path;
     }
 
     console.log("Formatted image path:", path);
 
     // Return with exactly one slash
-    return "/" + path;
+    return path;
   };
 
   const handleListingClick = () => {
