@@ -23,6 +23,13 @@ const SearchResult = ({
 }) => {
   const navigate = useNavigate();
 
+  const formatImagePath = (rawPath) => {
+    if (!rawPath) return ""; // fallback for missing images
+
+    // Remove "public" and replace backslashes with forward slashes
+    return rawPath.replace(/^public[\\/]/, "/").replace(/\\/g, "/");
+  };
+
   const handleListingClick = () => {
     navigate(`/listing/${id}`, {
       state: {
@@ -52,7 +59,7 @@ const SearchResult = ({
     >
       <div className="pr-5">
         <img
-          src={`/${images[0]}`}
+          src={`/${formatImagePath(images[0])}`}
           alt={title}
           className="max-w-[270px] sm:max-w-[300px] max-h-[180px] sm:max-h-[200px] rounded-xl"
         />

@@ -20,6 +20,14 @@ const ListingPage = () => {
 
   const location = useLocation();
   const listing = location.state?.listing || null;
+
+  const formatImagePath = (rawPath) => {
+    if (!rawPath) return ""; // fallback for missing images
+
+    // Remove "public" and replace backslashes with forward slashes
+    return rawPath.replace(/^public[\\/]/, "/").replace(/\\/g, "/");
+  };
+
   return (
     <div>
       <div className="px-6">
@@ -56,29 +64,29 @@ const ListingPage = () => {
         <div className="mb-10 grid grid-cols-2 gap-4">
           <div className="max-h-[600px] overflow-hidden rounded-4 hover:scale-102 duration-300 ">
             <img
-              src={`/${listing.images[0]}`}
+              src={`/${formatImagePath(listing.images[0])}`}
               alt="Airbnb picture"
               className="cursor-pointer w-full"
             />
           </div>
           <div className="grid grid-col-1 md:grid-cols-2 gap-2 max-h-[600px] overflow-hidden rounded-4">
             <img
-              src={`/${listing.images[0]}`}
+              src={`/${formatImagePath(listing.images[0])}`}
               alt="Airbnb picture"
               className="hover:scale-102 duration-300 cursor-pointer w-full overflow-hidden h-100"
             />
             <img
-              src={`/${listing.images[0]}`}
+              src={`/${formatImagePath(listing.images[0])}`}
               alt="Airbnb picture"
               className="hover:scale-102 duration-300 cursor-pointer  overflow-hidden h-100 w-full hidden md:block w-100"
             />
             <img
-              src={`/${listing.images[0]}`}
+              src={`/${formatImagePath(listing.images[0])}`}
               alt="Airbnb picture"
               className="hover:scale-102 duration-300 cursor-pointer  overflow-hidden h-100  w-full hidden md:block"
             />
             <img
-              src={`/${listing.images[0]}`}
+              src={`/${formatImagePath(listing.images[0])}`}
               alt="Airbnb picture"
               className="hover:scale-102 duration-300 cursor-pointer  overflow-hidden h-100  w-full hidden md:block"
             />
