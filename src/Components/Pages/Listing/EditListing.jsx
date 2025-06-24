@@ -102,6 +102,7 @@ const EditListing = () => {
       if (listing.images && listing.images.length > 0) {
         listing.images.forEach((img, idx) => {
           formatImagePath(img);
+          console.log("Formatted image path:", img);
           const mockFile = {
             name: `Image ${idx + 1}`,
             accepted: true,
