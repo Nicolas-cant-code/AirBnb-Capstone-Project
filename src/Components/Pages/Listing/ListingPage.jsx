@@ -24,8 +24,6 @@ const ListingPage = () => {
   const formatImagePath = (path) => {
     if (!path) return "";
 
-    console.log("Formatted image path:", path);
-
     // Remove "public" if it starts with it
     path = path.replace(/^public[\\/]+/, "");
 
@@ -43,8 +41,6 @@ const ListingPage = () => {
       path = path.slice(1);
       path = "/" + path;
     }
-
-    console.log("Formatted image path:", path);
 
     // Return with exactly one slash
     return path;

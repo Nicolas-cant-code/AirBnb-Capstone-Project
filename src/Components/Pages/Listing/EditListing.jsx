@@ -21,8 +21,6 @@ const EditListing = () => {
     navigate("/view/listings");
   }
 
-  console.log("Listing to edit:", listing);
-
   const navigate = useNavigate();
   const [form, setForm] = useState({
     listing_name: listing.listing_name || "",
@@ -40,8 +38,6 @@ const EditListing = () => {
 
   const formatImagePath = (path) => {
     if (!path) return "";
-
-    console.log("Formatted image path:", path);
 
     // Remove "public" if it starts with it
     path = path.replace(/^public[\\/]+/, "");
@@ -61,13 +57,9 @@ const EditListing = () => {
       path = "/" + path;
     }
 
-    console.log("Formatted image path:", path);
-
     // Return with exactly one slash
     return path;
   };
-
-  console.log("Form state:", form);
 
   const [images, setImages] = useState(listing.images || []);
 
@@ -102,7 +94,7 @@ const EditListing = () => {
       if (listing.images && listing.images.length > 0) {
         listing.images.forEach((img, idx) => {
           formatImagePath(img);
-          console.log("Formatted image path:", img);
+          console.log("Formatted image path:", img, idx);
           const mockFile = {
             name: `Image ${idx + 1}`,
             accepted: true,
