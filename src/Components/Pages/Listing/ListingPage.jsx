@@ -33,6 +33,12 @@ const ListingPage = () => {
     // Remove any double leading slashes
     path = path.replace(/^\/+/, "");
 
+    if (path[1] === "/") {
+      path = path.slice(2);
+    }
+    if (path[0] === "/") {
+      path = path.slice(1);
+    }
     // Return with exactly one slash
     return "/" + path;
   };
