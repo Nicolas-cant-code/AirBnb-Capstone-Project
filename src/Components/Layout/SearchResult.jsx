@@ -26,6 +26,8 @@ const SearchResult = ({
   const formatImagePath = (path) => {
     if (!path) return "";
 
+    console.log("Formatted image path:", path);
+
     // Remove "public" if it starts with it
     path = path.replace(/^public[\\/]+/, "");
 
@@ -41,6 +43,8 @@ const SearchResult = ({
     if (path[0] === "/") {
       path = path.slice(1);
     }
+
+    console.log("Formatted image path:", path);
 
     // Return with exactly one slash
     return "/" + path;
