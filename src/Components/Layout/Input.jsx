@@ -15,7 +15,7 @@ const Input = ({
   useEffect(() => {
     async function fetchLocations() {
       const response = await fetch(
-        "http://localhost:3000/api/location/get/locations"
+        "https://nicolas-airbnb-capstone-project.onrender.com//api/location/get/locations"
       );
       const data = await response.json();
       setLocationNames(data);

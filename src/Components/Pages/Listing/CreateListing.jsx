@@ -94,10 +94,13 @@ const CreateListing = () => {
     });
 
     try {
-      const res = await fetch("http://localhost:3000/api/listing/create", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+        "https://nicolas-airbnb-capstone-project.onrender.com//api/listing/create",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       const data = await res.json();
 

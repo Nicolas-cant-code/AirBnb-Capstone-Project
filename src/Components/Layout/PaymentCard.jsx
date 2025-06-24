@@ -85,21 +85,24 @@ const PaymentCard = ({
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/reservation/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          check_in: checkinDate,
-          check_out: checkoutDate,
-          total: totalPrice,
-          username: user.username,
-          user_id: user._id,
-          host_id: host,
-          listing_id: listing_id,
-        }),
-      });
+      const res = await fetch(
+        "https://nicolas-airbnb-capstone-project.onrender.com//api/reservation/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            check_in: checkinDate,
+            check_out: checkoutDate,
+            total: totalPrice,
+            username: user.username,
+            user_id: user._id,
+            host_id: host,
+            listing_id: listing_id,
+          }),
+        }
+      );
 
       const data = await res.json();
 

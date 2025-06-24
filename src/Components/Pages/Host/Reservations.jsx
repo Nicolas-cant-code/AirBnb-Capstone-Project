@@ -27,7 +27,7 @@ const Reservations = () => {
     const getReservation = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/reservation/get/reservations/?host_id=${hostId}&user_id=${userId}`
+          `https://nicolas-airbnb-capstone-project.onrender.com//api/reservation/get/reservations/?host_id=${hostId}&user_id=${userId}`
         );
 
         const data = await response.json();
@@ -55,7 +55,7 @@ const Reservations = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/reservation/delete?reservation_id=${id}`,
+        `https://nicolas-airbnb-capstone-project.onrender.com//api/reservation/delete?reservation_id=${id}`,
         {
           method: "GET",
           headers: {

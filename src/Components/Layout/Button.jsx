@@ -34,7 +34,7 @@ const Button = ({ slot, type, style, href, setSearchParams, id }) => {
     const selectedType = e.target.value;
 
     const response = await fetch(
-      `http://localhost:3000/api/listing/get/listing/filter?type=${selectedType}`,
+      `https://nicolas-airbnb-capstone-project.onrender.com//api/listing/get/listing/filter?type=${selectedType}`,
       {
         method: "GET",
         headers: {
@@ -60,7 +60,7 @@ const Button = ({ slot, type, style, href, setSearchParams, id }) => {
     console.log(selectedPrice);
     if (selectedPrice !== "5000") {
       const response = await fetch(
-        `http://localhost:3000/api/listing/get/listing/filter?min=${selectedPrice}&max=${
+        `https://nicolas-airbnb-capstone-project.onrender.com//api/listing/get/listing/filter?min=${selectedPrice}&max=${
           parseInt(selectedPrice) + 999
         }`,
         {
@@ -81,7 +81,7 @@ const Button = ({ slot, type, style, href, setSearchParams, id }) => {
       setSearchParams(listings);
     } else {
       const response = await fetch(
-        `http://localhost:3000/api/listing/get/listing/filter?min=${selectedPrice}&max=${
+        `https://nicolas-airbnb-capstone-project.onrender.com//api/listing/get/listing/filter?min=${selectedPrice}&max=${
           parseInt(selectedPrice) + 100000000
         }`,
         {

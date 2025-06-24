@@ -9,7 +9,7 @@ const MiddleNav = ({ type }) => {
     e.preventDefault();
 
     const response = await fetch(
-      `http://localhost:3000/api/listing/search/listings/all`,
+      `https://nicolas-airbnb-capstone-project.onrender.com//api/listing/search/listings/all`,
       {
         method: "GET",
         headers: {
