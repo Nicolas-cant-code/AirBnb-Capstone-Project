@@ -30,7 +30,7 @@ const EditListing = () => {
     bathrooms: listing.bathrooms || "",
     type: listing.type || "",
     price: listing.price || "",
-    amenities: listing.amenities || "",
+    amenities: listing.amenities || [],
     host_id: user._id || "",
     service: listing.service || false,
     cleaning: listing.cleaning || false,
@@ -189,23 +189,25 @@ const EditListing = () => {
     const input = document.getElementById("amenities");
     const newAmenity = input.value.trim();
     input.value = "";
+
     if (!newAmenity) return;
 
-    const current = form.amenities.split(",").map((a) => a.trim()) || [];
-    if (current.includes(newAmenity)) return alert("Amenity already exists");
+    if (form.amenities.includes(newAmenity)) {
+      return alert("Amenity already exists");
+    }
+
     setForm((prevForm) => ({
       ...prevForm,
-      amenities: current.concat(newAmenity).join(", "),
+      amenities: [...prevForm.amenities, newAmenity],
     }));
   };
 
   const removeAmenity = (e) => {
     const amenityToRemove = e.target.textContent.trim().slice(0, -1);
-    const updated = form.amenities
-      .split(",")
-      .filter((a) => a.trim() !== amenityToRemove)
-      .join(", ");
-    setForm((prevForm) => ({ ...prevForm, amenities: updated }));
+    setForm((prevForm) => ({
+      ...prevForm,
+      amenities: prevForm.amenities.filter((a) => a !== amenityToRemove),
+    }));
     e.stopPropagation();
   };
 
