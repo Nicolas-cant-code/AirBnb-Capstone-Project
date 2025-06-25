@@ -77,7 +77,7 @@ const Search = () => {
           listings: data,
         },
       });
-    } catch (err) {
+    } catch {
       alert(
         "An error occurred while processing your search. Please try again."
       );
