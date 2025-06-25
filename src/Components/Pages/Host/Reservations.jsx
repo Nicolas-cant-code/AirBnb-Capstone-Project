@@ -106,7 +106,7 @@ const Reservations = () => {
         <p className="mb-3">My Reservations</p>
         <div className="mb-5">
           {reservations.length !== 0 ? (
-            <table className="w-full text-left border-collapse border-3 border-gray-300">
+            <table className="scale-85 sm:scale-100  w-full text-left border-collapse border-3 border-gray-300">
               <thead>
                 <tr>
                   <TableField slot={"Booked by"} />

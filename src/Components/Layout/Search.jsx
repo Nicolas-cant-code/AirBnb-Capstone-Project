@@ -85,7 +85,7 @@ const Search = () => {
   };
 
   return (
-    <div className="w-100 lg:w-75 d-flex justify-self-center pb-5 mb-4 lg:mb-0 h-[112px]">
+    <div className="w-100 lg:w-75 d-flex justify-self-center pb-5 mb-4 lg:mb-0 h-[112px] scale-60 sm:scale-80 md:scale-100">
       <div className="d-flex flex-coloumn align-items-center justify-content-between bg-white text-dark py-1 px-3 rounded-50 w-100">
         <div className="border-right ps-1 sm:ps-3 d-flex align-items-center gap-1 md:gap-4 cursor-pointer">
           <div className="d-flex flex-column pr-2">

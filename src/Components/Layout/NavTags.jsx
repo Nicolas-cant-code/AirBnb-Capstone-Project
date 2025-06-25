@@ -30,7 +30,7 @@ const NavTags = ({ setSearchParams }) => {
           <Button slot={"Free parking"} />
           <Button slot={"Free cancellation"} />
         </span>
-        <span>
+        <span className="hidden sm:flex">
           <Button slot={"Filter"} type={"filter"} />
         </span>
       </div>

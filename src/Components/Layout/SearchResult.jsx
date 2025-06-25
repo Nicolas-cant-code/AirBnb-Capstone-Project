@@ -79,7 +79,7 @@ const SearchResult = ({
         <img
           src={`/${formatImagePath(images[0])}`}
           alt={title}
-          className="max-w-[270px] sm:max-w-[300px] max-h-[180px] sm:max-h-[200px] rounded-xl"
+          className="max-w-[180px] sm:max-w-[300px] max-h-[180px] sm:max-h-[200px] rounded-xl"
         />
       </div>
       <div className="flex flex-col w-full">

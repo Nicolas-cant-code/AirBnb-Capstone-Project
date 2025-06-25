@@ -88,7 +88,7 @@ const Footer = ({ padding }) => {
               </select>
             </div>
           </div>
-          <div className="d-flex gap-1">
+          <div className="d-flex flex-col sm:flex-row gap-1">
             <FacebookRoundedIcon />
             <XIcon />
             <InstagramIcon />
