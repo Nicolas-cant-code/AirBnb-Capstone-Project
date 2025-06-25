@@ -85,8 +85,8 @@ const Search = () => {
   };
 
   return (
-    <div className="lg:w-75 d-flex justify-self-center pb-5 mb-4 lg:mb-0 h-[112px] scale-60 sm:scale-80 md:scale-100">
-      <div className="d-flex flex-coloumn align-items-center justify-content-between bg-white text-dark py-1 px-2 md:px-3 rounded-50">
+    <div className="d-flex justify-self-center pb-5 mb-4 lg:mb-0 h-[112px] scale-60 sm:scale-80 md:scale-100">
+      <div className="d-flex flex-coloumn align-items-center justify-content-between bg-white text-dark py-1 px-2 md:px-3 rounded-50  w-[100vw]">
         <div className="border-right ps-1 sm:ps-3 d-flex align-items-center gap-1 md:gap-4 cursor-pointer">
           <div className="d-flex flex-column pr-2">
             <span className="fw-semibold fs-7">Hotels</span>
@@ -147,17 +147,17 @@ const Search = () => {
           <span className="fw-semibold fs-7">Guests</span>
           <input
             type="number"
-            className="text-dark mb-0 outline-none"
+            className="text-dark mb-0 outline-none w-fit"
             placeholder="Add guests"
             onChange={(event) => setGuests(event.target.value)}
             min={1}
           />
         </div>
-        <div style={{ marginRight: "-0.5rem" }}>
+        <div className="mr-1">
           <SearchIcon
             style={{ boxSizing: "content-box" }}
             className="cursor-pointer bg-danger rounded-circle p-3 text-white
-            absolute right-[44vw] xl:right-42 top-42 xl:top-25"
+           scale-60 sm:scale-75 md:scale-90 lg:scale-95 xl:scale-100"
             onClick={(e) => handleSearch(e)}
           />
         </div>
