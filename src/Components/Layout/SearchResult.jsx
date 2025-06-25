@@ -73,7 +73,11 @@ const SearchResult = ({
     >
       <div className="pr-5">
         <img
-          src={`${formatImagePath(images[0])}`}
+          src={`${
+            images[0] == "h"
+              ? formatImagePath(images[0])
+              : "/" + formatImagePath(images[0])
+          }`}
           alt={title}
           className="max-w-[180px] sm:max-w-[300px] max-h-[180px] sm:max-h-[200px] rounded-xl"
         />
