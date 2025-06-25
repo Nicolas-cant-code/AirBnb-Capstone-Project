@@ -93,6 +93,7 @@ const EditListing = () => {
     if (images.length >= count) {
       if (listing.images && listing.images.length > 0) {
         listing.images.forEach((img, idx) => {
+          console.log("Before format path:", img, idx);
           formatImagePath(img);
           console.log("Formatted image path:", img, idx);
           const mockFile = {
