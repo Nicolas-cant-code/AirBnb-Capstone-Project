@@ -27,7 +27,6 @@ const CreateListing = () => {
     host_id: user._id || "",
   });
 
-  const [imageFiles, setImageFiles] = useState([]);
   const dropzoneRef = useRef(null);
   const dropzoneInstanceRef = useRef(null);
 
@@ -47,14 +46,6 @@ const CreateListing = () => {
       thumbnailWidth: 150,
       thumbnailHeight: 150,
       clickable: dropzoneRef.current,
-    });
-
-    dz.on("addedfile", (file) => {
-      setImageFiles((prev) => [...prev, file]);
-    });
-
-    dz.on("removedfile", (file) => {
-      setImageFiles((prev) => prev.filter((f) => f !== file));
     });
 
     dropzoneInstanceRef.current = dz;
