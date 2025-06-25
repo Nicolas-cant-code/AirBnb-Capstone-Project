@@ -50,7 +50,7 @@ const MiddleNav = ({ type }) => {
           </div>
         </div>
       ) : type === "search" ? (
-        <div className="d-flex flex-coloumn align-items-center justify-content-center space-x-2 md:space-x-5 bg-white text-dark py-1 px-3 border shadow-sm rounded-50 scale-75 sm:scale-90 md:scale-100">
+        <div className="d-flex flex-coloumn align-items-center justify-content-center space-x-2 md:space-x-5 bg-white text-dark py-1 px-2 sm:px-3 border shadow-sm rounded-50 scale-75 sm:scale-90 md:scale-100">
           <div className="pl-0 md:pl-2 cursor-pointer text-light-grey">
             Location: All
           </div>

@@ -56,7 +56,7 @@ const Footer = ({ padding }) => {
         <div>
           <span>© 2025 Airbnb, Inc. • Privacy • Terms • Sitemap</span>
         </div>
-        <div className="d-flex gap-5">
+        <div className="d-flex flex-col sm:flex-row gap-3 sm:gap-5">
           <div className="d-flex gap-1 align-items-center">
             <LanguageIcon />
             <div className="dropdown btn p-0">
@@ -88,7 +88,7 @@ const Footer = ({ padding }) => {
               </select>
             </div>
           </div>
-          <div className="d-flex flex-col sm:flex-row gap-1">
+          <div className="d-flex gap-1">
             <FacebookRoundedIcon />
             <XIcon />
             <InstagramIcon />
