@@ -72,52 +72,47 @@ const CreateListing = () => {
     const formData = new FormData();
     formData.append("image", file);
 
-    const res = await fetch(
-      "https://nicolas-airbnb-capstone-project.onrender.com/api/listing/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    const res = await fetch("/api/listing/upload", {
+      method: "POST",
+      body: formData,
+    });
 
     const data = await res.json();
-    return data.imageUrl; // Cloudinary URL
+    return data.imageUrl;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !form.listing_name ||
-      !form.location ||
-      !form.description ||
-      !form.type ||
-      !form.price ||
-      !form.bedrooms ||
-      !form.bathrooms
-    ) {
-      alert("All fields are required");
+    const formData = new FormData();
+
+    // Add form fields
+    Object.entries(form).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    // Add images from Dropzone
+    const dzFiles = dropzoneInstanceRef.current?.files || [];
+
+    if (dzFiles.length === 0) {
+      alert("At least 1 image is required");
       return;
     }
 
-    if (imageFiles.length === 0) {
-      alert("At least one image is required");
-      return;
-    }
+    dzFiles.forEach((file) => {
+      formData.append("images", file);
+      // Handle image upload to Cloudinary
+      handleUploadToCloudinary(file);
+    });
 
     try {
-      // Upload all images to Cloudinary
-      const imageUrls = await Promise.all(
-        imageFiles.map((file) => handleUploadToCloudinary(file))
-      );
-
       // Create the listing
       const res = await fetch("/api/listing/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...form, images: imageUrls }),
+        body: formData,
       });
 
       const data = await res.json();
