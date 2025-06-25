@@ -105,7 +105,9 @@ const EditListing = () => {
             addRemoveLinks: true,
           };
           console.log("Adding existing image:", mockFile);
-          console.log("Adding existing image:", formatImagePath(mockFile.dataURL));
+          console.log(
+            "Adding existing image:",
+            formatImagePath(mockFile.dataURL)
           );
           // Emit Dropzone events to add the file and show the thumbnail
           dropzoneInstanceRef.current.emit("addedfile", mockFile);
