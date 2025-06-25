@@ -152,80 +152,62 @@ const EditListing = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.bedrooms < 1 || form.bathrooms < 1) {
-      alert("Bedrooms and Bathrooms must be at least 1");
+    if (form.bedrooms < 1 || form.bathrooms < 1 || form.price < 1) {
+      alert("Please ensure Bedrooms, Bathrooms, and Price are at least 1");
       return;
     }
 
-    if (form.price < 1) {
-      alert("Price must be at least 1 currencty unit");
-      return;
-    }
-
-    let bEmpty = false;
-
-    Object.entries(form).forEach(([key, value]) => {
-      if (key !== "service" || key !== "cleaning") {
-        if (value === "") {
-          alert(`${key} is required`);
-          bEmpty = true;
-          return;
-        }
-      }
-    });
-
-    if (bEmpty) return;
-
-    const formData = new FormData();
-
-    // Add form fields
-    Object.entries(form).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-
-    // Add images from Dropzone
-    if (images.length === 0) {
-      alert("At least 1 image is required");
-      return;
-    }
-
-    images.forEach((img) => {
-      if (typeof img === "string") {
-        // Existing image path
-        formData.append("existingImages[]", img);
-      } else {
-        // New file
-        formData.append("images", img);
-      }
-    });
-
-    formData.append("_id", listing._id);
+    const formData = {
+      ...form,
+      amenities:
+        typeof form.amenities === "string"
+          ? form.amenities.split(",").map((s) => s.trim())
+          : form.amenities,
+      images: [],
+    };
 
     try {
+      // Separate existing image URLs and new image files
+      const existingImageURLs = images.filter((img) => typeof img === "string");
+      const newFiles = images.filter((img) => typeof img !== "string");
+
+      // Upload new files to Cloudinary
+      const uploadPromises = newFiles.map(async (file) => {
+        const imgForm = new FormData();
+        imgForm.append("image", file);
+
+        const res = await fetch("/api/listing/upload", {
+          method: "POST",
+          body: imgForm,
+        });
+
+        const data = await res.json();
+        return data.imageUrl;
+      });
+
+      const uploadedImageURLs = await Promise.all(uploadPromises);
+      formData.images = [...existingImageURLs, ...uploadedImageURLs];
+      formData._id = listing._id;
+
       const res = await fetch(`/api/listing/edit/listing/${listing._id}`, {
         method: "PUT",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        // If validation errors were returned
-        if (data.errors) {
-          const messages = data.errors.map((err) => err.msg).join("\n");
-          alert("Failed to edit your Listing:\n" + messages);
-        } else {
-          alert(
-            "Failed to edit your Listing: " + (data.message || res.statusText)
-          );
-        }
+        alert("Failed to update listing: " + (data.message || res.statusText));
         return;
       }
 
-      alert("Successfully Updated your listing!");
+      alert("Successfully updated your listing!");
       navigate("/view/listings");
     } catch (err) {
-      console.error("Network or server error:", err);
+      console.error("Update failed:", err);
       alert("An error occurred. Please try again later.");
     }
   };

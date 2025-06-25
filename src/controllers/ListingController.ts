@@ -89,21 +89,15 @@ export class ListingController {
 
     const listing = req.body;
 
-    const paths = req.files?.map((file) => file.path) || [];
+    // Images are Cloudinary URLs from the frontend
+    const images = listing.images || [];
 
-    let existingImages = req.body.existingImages || [];
-    if (typeof existingImages === "string") {
-      existingImages = [existingImages];
-    }
-
-    const allImages = [...existingImages, ...paths];
-
-    if (allImages.length === 0) {
+    if (!images || images.length === 0) {
       return res.status(400).json({ message: "At least 1 image is required" });
     }
 
     try {
-      let listingData = {
+      const listingData = {
         listing_name: listing.listing_name,
         location: listing.location,
         type: listing.type,
@@ -113,9 +107,11 @@ export class ListingController {
         price: parseInt(listing.price),
         bedrooms: parseInt(listing.bedrooms),
         bathrooms: parseInt(listing.bathrooms),
-        images: allImages,
+        images: images,
         amenities:
-          (listing.amenities || "").split(",").map((s) => s.trim()) || [],
+          typeof listing.amenities === "string"
+            ? listing.amenities.split(",").map((s) => s.trim())
+            : listing.amenities || [],
         updated_at: new Date(),
       };
 
