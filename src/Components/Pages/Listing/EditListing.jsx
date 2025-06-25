@@ -93,14 +93,11 @@ const EditListing = () => {
     if (images.length >= count) {
       if (listing.images && listing.images.length > 0) {
         listing.images.forEach((img, idx) => {
-          console.log("Before format path:", img, idx);
-          formatImagePath(img);
-          console.log("Formatted image path:", img, idx);
           const mockFile = {
             name: `Image ${idx + 1}`,
             accepted: true,
             kind: "existing",
-            dataURL: `${img}`,
+            dataURL: `${formatImagePath(img)}`,
             thumbnailWidth: 150,
             thumbnailHeight: 150,
             clickable: dropzoneRef.current,
