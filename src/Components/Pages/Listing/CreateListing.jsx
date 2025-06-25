@@ -10,10 +10,9 @@ import BlueButton from "../../Layout/BlueButton";
 Dropzone.autoDiscover = false;
 
 const CreateListing = () => {
-  // get user from localStorage and Id from MongoDB
   const user = JSON.parse(localStorage.getItem("user")) || {};
-
   const navigate = useNavigate();
+
   const [form, setForm] = useState({
     listing_name: "",
     location: "",
@@ -23,12 +22,12 @@ const CreateListing = () => {
     type: "",
     price: "",
     amenities: "",
-    images: [],
     service: false,
     cleaning: false,
     host_id: user._id || "",
   });
 
+  const [imageFiles, setImageFiles] = useState([]);
   const dropzoneRef = useRef(null);
   const dropzoneInstanceRef = useRef(null);
 
@@ -41,7 +40,7 @@ const CreateListing = () => {
       url: "/upload",
       autoProcessQueue: false,
       paramName: "file",
-      maxFilesize: 2, // MB
+      maxFilesize: 2,
       acceptedFiles: "image/*",
       maxFiles: 8,
       addRemoveLinks: true,
@@ -50,114 +49,112 @@ const CreateListing = () => {
       clickable: dropzoneRef.current,
     });
 
+    dz.on("addedfile", (file) => {
+      setImageFiles((prev) => [...prev, file]);
+    });
+
+    dz.on("removedfile", (file) => {
+      setImageFiles((prev) => prev.filter((f) => f !== file));
+    });
+
     dropzoneInstanceRef.current = dz;
   }, []);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    if (e.target.name === "service" || e.target.name === "cleaning") {
-      // Toggle boolean values for service and cleaning
-      setForm({ ...form, [e.target.name]: e.target.checked });
-    }
+    const { name, type, checked, value } = e.target;
+    setForm({
+      ...form,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleUploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await fetch(
+      "https://nicolas-airbnb-capstone-project.onrender.com/api/listing/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await res.json();
+    return data.imageUrl; // Cloudinary URL
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.bedrooms < 1 || form.bathrooms < 1) {
-      alert("Bedrooms and Bathrooms must be at least 1");
+    if (
+      !form.listing_name ||
+      !form.location ||
+      !form.description ||
+      !form.type ||
+      !form.price ||
+      !form.bedrooms ||
+      !form.bathrooms
+    ) {
+      alert("All fields are required");
       return;
     }
 
-    if (form.price < 1) {
-      alert("Price must be at least 1 currencty unit");
+    if (imageFiles.length === 0) {
+      alert("At least one image is required");
       return;
     }
-
-    const formData = new FormData();
-
-    // Add form fields
-    Object.entries(form).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-
-    // Add images from Dropzone
-    const dzFiles = dropzoneInstanceRef.current?.files || [];
-
-    if (dzFiles.length === 0) {
-      alert("At least 1 image is required");
-      return;
-    }
-
-    dzFiles.forEach((file) => {
-      formData.append("images", file);
-    });
 
     try {
+      // Upload all images to Cloudinary
+      const imageUrls = await Promise.all(
+        imageFiles.map((file) => handleUploadToCloudinary(file))
+      );
+
+      // Create the listing
       const res = await fetch("/api/listing/create", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...form, images: imageUrls }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        // If validation errors were returned
-        if (data.errors) {
-          const messages = data.errors.map((err) => err.msg).join("\n");
-          alert("Failed to create Listing:\n" + messages);
-        } else {
-          alert(
-            "Failed to create Listing: " + (data.message || res.statusText)
-          );
-        }
+        alert("Failed to create listing: " + (data.message || res.statusText));
         return;
       }
 
       alert("Successfully created a listing!");
       navigate("/view/listings");
     } catch (err) {
-      console.error("Network or server error:", err);
+      console.error("Error:", err);
       alert("An error occurred. Please try again later.");
     }
   };
 
   const handleAddAmenity = () => {
-    const newAmenity = document.getElementById("amenities").value.trim();
-    let amenityExists = false;
-
-    form.amenities.split(",").map(() => {
-      if (form.amenities && form.amenities.includes(newAmenity)) {
-        amenityExists = true;
-        return;
-      }
-    });
-
-    if (amenityExists) {
-      alert("Amenity already exists");
-      return;
-    }
-
-    if (newAmenity && amenityExists === false) {
-      setForm((prevForm) => ({
-        ...prevForm,
-        amenities: prevForm.amenities
-          ? `${prevForm.amenities}, ${newAmenity}`
-          : newAmenity,
-      }));
-    }
+    const input = document.getElementById("amenities");
+    const newAmenity = input.value.trim();
+    input.value = "";
+    if (!newAmenity) return;
+    const current = form.amenities.split(",").map((a) => a.trim());
+    if (current.includes(newAmenity)) return alert("Amenity already exists");
+    setForm((prevForm) => ({
+      ...prevForm,
+      amenities: current.concat(newAmenity).join(", "),
+    }));
   };
 
   const removeAmenity = (e) => {
-    const amenityToRemove = e.target.textContent.trim().slice(0, -1); // Remove the trailing 'x'
-
-    setForm((prevForm) => ({
-      ...prevForm,
-      amenities: prevForm.amenities
-        .split(",")
-        .filter((amenity) => amenity.trim() !== amenityToRemove)
-        .join(", "),
-    }));
+    const amenityToRemove = e.target.textContent.trim().slice(0, -1);
+    const updated = form.amenities
+      .split(",")
+      .filter((a) => a.trim() !== amenityToRemove)
+      .join(", ");
+    setForm((prevForm) => ({ ...prevForm, amenities: updated }));
     e.stopPropagation();
   };
 

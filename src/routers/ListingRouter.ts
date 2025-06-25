@@ -2,6 +2,7 @@ import { Router } from "express";
 import { GlobalMiddleware } from "../middleware/GlobalMiddlewate";
 import { ListingController } from "../controllers/ListingController";
 import { ListingValidator } from "../validators/ListingValidator";
+import { cloudinaryUploader } from "../utils/Cloudinary";
 import { Utils } from "../utils/Utils";
 
 class ListingRouter {
@@ -46,6 +47,13 @@ class ListingRouter {
       ListingValidator.createListing(),
       GlobalMiddleware.checkError,
       ListingController.createListing
+    );
+
+    // Cloudinary image upload
+    this.router.post(
+      "/upload",
+      cloudinaryUploader.single("image"),
+      ListingController.uploadImage
     );
   }
   patchRoutes() {}

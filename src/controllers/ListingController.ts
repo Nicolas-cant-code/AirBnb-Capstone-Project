@@ -258,4 +258,15 @@ export class ListingController {
       next(e);
     }
   }
+
+  static async uploadImage(req, res) {
+    try {
+      const imageUrl = req.file?.path;
+      if (!imageUrl)
+        return res.status(400).json({ message: "No image uploaded" });
+      return res.json({ imageUrl });
+    } catch (err) {
+      return res.status(500).json({ message: "Upload failed", error: err });
+    }
+  }
 }
