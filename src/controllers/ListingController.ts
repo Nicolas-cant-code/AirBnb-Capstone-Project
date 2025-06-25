@@ -32,7 +32,7 @@ export class ListingController {
         price: parseInt(listing.price),
         bedrooms: parseInt(listing.bedrooms),
         bathrooms: parseInt(listing.bathrooms),
-        images: imageUrls, // ✅ use Cloudinary URLs here
+        images: imageUrls,
         amenities: (listing.amenities || "").split(",").map((s) => s.trim()),
         host_id: listing.host_id,
         created_at: new Date(),
