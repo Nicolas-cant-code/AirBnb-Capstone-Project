@@ -23,27 +23,6 @@ const SearchResult = ({
 }) => {
   const navigate = useNavigate();
 
-  const formatImagePath = (path) => {
-    if (!path) return "";
-
-    // Remove "public" if it starts with it
-    path = path.replace(/^public[\\/]+/, "");
-
-    // Replace all backslashes with forward slashes
-    path = path.replace(/\\/g, "/");
-
-    // Remove any double leading slashes
-    path = path.replace(/^\/+/, "");
-
-    if (path[1] === "/") {
-      path = path.slice(2);
-      path = "/" + path;
-    }
-
-    // Return with exactly one slash
-    return path;
-  };
-
   const handleListingClick = () => {
     navigate(`/listing/${id}`, {
       state: {
@@ -73,11 +52,7 @@ const SearchResult = ({
     >
       <div className="pr-5">
         <img
-          src={`${
-            images[0] == "h"
-              ? formatImagePath(images[0])
-              : "/" + formatImagePath(images[0])
-          }`}
+          src={`${images[0]}`}
           alt={title}
           className="max-w-[180px] sm:max-w-[300px] max-h-[180px] sm:max-h-[200px] rounded-xl"
         />

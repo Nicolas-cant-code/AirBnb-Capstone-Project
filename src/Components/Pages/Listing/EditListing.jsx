@@ -36,31 +36,6 @@ const EditListing = () => {
     cleaning: listing.cleaning || false,
   });
 
-  const formatImagePath = (path) => {
-    if (!path) return "";
-
-    // Remove "public" if it starts with it
-    path = path.replace(/^public[\\/]+/, "");
-
-    // Replace all backslashes with forward slashes
-    path = path.replace(/\\/g, "/");
-
-    // Remove any double leading slashes
-    path = path.replace(/^\/+/, "");
-
-    if (path[1] === "/") {
-      path = path.slice(2);
-      path = "/" + path;
-    }
-    if (path[0] === "/") {
-      path = path.slice(1);
-      path = "/" + path;
-    }
-
-    // Return with exactly one slash
-    return path;
-  };
-
   const [images, setImages] = useState(listing.images || []);
 
   const dropzoneRef = useRef(null);
@@ -105,16 +80,13 @@ const EditListing = () => {
             addRemoveLinks: true,
           };
           console.log("Adding existing image:", mockFile);
-          console.log(
-            "Adding existing image:",
-            formatImagePath(mockFile.dataURL)
-          );
+          console.log("Adding existing image:", mockFile.dataURL);
           // Emit Dropzone events to add the file and show the thumbnail
           dropzoneInstanceRef.current.emit("addedfile", mockFile);
           dropzoneInstanceRef.current.emit(
             "thumbnail",
             mockFile,
-            "/" + formatImagePath(mockFile.dataURL),
+            mockFile.dataURL,
             mockFile.name
           );
           dropzoneInstanceRef.current.emit("complete", mockFile);
