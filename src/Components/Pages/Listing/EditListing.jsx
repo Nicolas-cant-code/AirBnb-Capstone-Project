@@ -97,19 +97,22 @@ const EditListing = () => {
             name: `Image ${idx + 1}`,
             accepted: true,
             kind: "existing",
-            dataURL: `${formatImagePath(img)}`,
+            dataURL: `${img}`,
             thumbnailWidth: 150,
             thumbnailHeight: 150,
             clickable: dropzoneRef.current,
             paramName: "file",
             addRemoveLinks: true,
           };
+          console.log("Adding existing image:", mockFile);
+          console.log("Adding existing image:", formatImagePath(mockFile.dataURL));
+          );
           // Emit Dropzone events to add the file and show the thumbnail
           dropzoneInstanceRef.current.emit("addedfile", mockFile);
           dropzoneInstanceRef.current.emit(
             "thumbnail",
             mockFile,
-            "/" + mockFile.dataURL,
+            "/" + formatImagePath(mockFile.dataURL),
             mockFile.name
           );
           dropzoneInstanceRef.current.emit("complete", mockFile);
