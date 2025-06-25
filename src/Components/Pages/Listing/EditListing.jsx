@@ -190,7 +190,8 @@ const EditListing = () => {
     const newAmenity = input.value.trim();
     input.value = "";
     if (!newAmenity) return;
-    const current = form.amenities.split(",").map((a) => a.trim());
+
+    const current = form.amenities.split(",").map((a) => a.trim()) || [];
     if (current.includes(newAmenity)) return alert("Amenity already exists");
     setForm((prevForm) => ({
       ...prevForm,
