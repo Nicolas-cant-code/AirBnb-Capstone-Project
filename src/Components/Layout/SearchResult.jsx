@@ -39,10 +39,6 @@ const SearchResult = ({
       path = path.slice(2);
       path = "/" + path;
     }
-    if (path[0] === "/") {
-      path = path.slice(1);
-      path = "/" + path;
-    }
 
     // Return with exactly one slash
     return path;
@@ -77,7 +73,7 @@ const SearchResult = ({
     >
       <div className="pr-5">
         <img
-          src={`/${formatImagePath(images[0])}`}
+          src={`${formatImagePath(images[0])}`}
           alt={title}
           className="max-w-[180px] sm:max-w-[300px] max-h-[180px] sm:max-h-[200px] rounded-xl"
         />
