@@ -125,7 +125,7 @@ const PaymentCard = ({
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 scale-60 sm:scale-80 md:scale-100">
       <div className="p-4 shadow-xl/25 rounded-3 min-w-[370px]">
         <div className="flex justify-between mb-3">
           <span>

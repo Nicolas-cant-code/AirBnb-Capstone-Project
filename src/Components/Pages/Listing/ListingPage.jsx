@@ -262,7 +262,7 @@ const ListingPage = () => {
                   <p className="text-gray-500">Joined September 2023</p>
                 </div>
               </div>
-              <div className="flex gap-3 mt-3 fw-bold text-red-500 p-3 pb-2 bg-gray-100 shadow-md/30 w-fit rounded-xl hover:scale-103 duration-500 cursor-pointer">
+              <div className="flex gap-3 mt-3 fw-bold text-red-500 p-3 pb-2 bg-gray-100 shadow-md/30 w-fit rounded-xl hover:scale-103 duration-500 cursor-pointer scale-75 sm:scale-90 md:scale-100">
                 <span className="flex align-center">
                   <h4 className="fs-5 mr-2 fw-bold">
                     {Math.ceil(Math.random() * 100)}

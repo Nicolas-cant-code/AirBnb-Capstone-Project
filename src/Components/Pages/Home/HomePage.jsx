@@ -98,7 +98,7 @@ const HomePage = () => {
               imgStyle={"h-[640px] pl-15 rounded-xl"}
               title={"Questions about hosting?"}
               buttonText={"Ask a Superhost"}
-              titleStyle={"font-bold pt-10 pb-40 max-w-60 text-large md:fs-2"}
+              titleStyle={"font-bold pt-10 pb-40 max-w-60 fs-4 md:fs-2 lg:fs-1"}
               buttonStyle={"rounded text-black py-3 bg-gray-100"}
             />
           </div>

@@ -22,7 +22,7 @@ const Calendar = () => {
   ]);
 
   return (
-    <div>
+    <div className="scale-75 sm:scale-100">
       <DateRange
         editableDateInputs={true}
         onChange={(item) => setDateRange([item.selection])}
