@@ -111,7 +111,7 @@ const EditListing = () => {
         );
       });
     }
-  }, [listing.images, images.length, count]);
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
