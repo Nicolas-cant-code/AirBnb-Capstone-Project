@@ -4,7 +4,7 @@ import * as dotenv from "dotenv";
 
 const storageOptions = Multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/assets/Airbnbs" + file.fieldname);
+    cb(null, "/assets/Airbnbs" + file.fieldname);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
