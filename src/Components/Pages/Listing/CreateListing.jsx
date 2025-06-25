@@ -99,19 +99,21 @@ const CreateListing = () => {
       return;
     }
 
-    dzFiles.forEach((file) => {
-      formData.append("images", file);
-      // Handle image upload to Cloudinary
-      handleUploadToCloudinary(file);
+    const uploadedImageUrls = await Promise.all(
+      dzFiles.map(async (file) => {
+        return await handleUploadToCloudinary(file);
+      })
+    );
+
+    // Add Cloudinary URLs to form data
+    uploadedImageUrls.forEach((url) => {
+      formData.append("images", url);
     });
 
     try {
       // Create the listing
       const res = await fetch("/api/listing/create", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: formData,
       });
 
