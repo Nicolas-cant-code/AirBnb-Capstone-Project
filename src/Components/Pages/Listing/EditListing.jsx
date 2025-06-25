@@ -42,6 +42,7 @@ const EditListing = () => {
   const dropzoneInstanceRef = useRef(null);
 
   let count = 0;
+
   useEffect(() => {
     count++;
     if (dropzoneRef.current && !dropzoneInstanceRef.current) {
@@ -185,40 +186,25 @@ const EditListing = () => {
   };
 
   const handleAddAmenity = () => {
-    const newAmenity = document.getElementById("amenities").value.trim();
-    let amenityExists = false;
-
-    form.amenities.split(",").map(() => {
-      if (form.amenities && form.amenities.includes(newAmenity)) {
-        amenityExists = true;
-        return;
-      }
-    });
-
-    if (amenityExists) {
-      alert("Amenity already exists");
-      return;
-    }
-
-    if (newAmenity && amenityExists === false) {
-      setForm((prevForm) => ({
-        ...prevForm,
-        amenities: prevForm.amenities
-          ? `${prevForm.amenities}, ${newAmenity}`
-          : newAmenity,
-      }));
-    }
+    const input = document.getElementById("amenities");
+    const newAmenity = input.value.trim();
+    input.value = "";
+    if (!newAmenity) return;
+    const current = form.amenities.split(",").map((a) => a.trim());
+    if (current.includes(newAmenity)) return alert("Amenity already exists");
+    setForm((prevForm) => ({
+      ...prevForm,
+      amenities: current.concat(newAmenity).join(", "),
+    }));
   };
 
   const removeAmenity = (e) => {
-    const amenityToRemove = e.target.textContent.trim().slice(0, -1); // Remove the trailing 'x'
-
-    setForm((prevForm) => ({
-      ...prevForm,
-      amenities: prevForm.amenities.filter(
-        (amenity) => amenity.trim() !== amenityToRemove
-      ),
-    }));
+    const amenityToRemove = e.target.textContent.trim().slice(0, -1);
+    const updated = form.amenities
+      .split(",")
+      .filter((a) => a.trim() !== amenityToRemove)
+      .join(", ");
+    setForm((prevForm) => ({ ...prevForm, amenities: updated }));
     e.stopPropagation();
   };
 
