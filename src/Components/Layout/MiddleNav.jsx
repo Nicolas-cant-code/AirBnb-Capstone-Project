@@ -30,7 +30,7 @@ const MiddleNav = ({ type }) => {
     navigate("/search", { state: { listings: data } });
   };
   return (
-    <div className="max-w-[250px] sm:max-w-[350px] md:max-w-[800px]">
+    <div className="max-w-[250px] sm:max-w-[350px] md:max-w-[4000px]">
       {type === "home" ? (
         <div
           className="flex space-x-2 lg:space-x-8"
@@ -67,8 +67,8 @@ const MiddleNav = ({ type }) => {
           </div>
         </div>
       ) : type === "listing" ? (
-        <div className="w-[75%] shadow-sm d-flex align-items-center justify-content-between bg-white text-dark py-1 px-1 border rounded-50 scale-66 sm:scale-75 md:scale-100">
-          <div className="ps-3 pe-2">
+        <div className="shadow-sm d-flex align-items-center justify-content-between bg-white text-dark py-1 px-1 border rounded-50 scale-66 sm:scale-75 md:scale-100">
+          <div className="ps-3 pe-2 w-[75%]">
             <input
               type="text"
               className="border-0 outline-none pe-5"
