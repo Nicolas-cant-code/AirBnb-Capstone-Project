@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "../../Layout/Nav";
 import Footer from "../../Layout/Footer";
 import PaymentCard from "../../Layout/PaymentCard";
@@ -21,7 +21,7 @@ const ListingPage = () => {
   const location = useLocation();
   const listing = location.state?.listing || null;
 
-  let host = null;
+  const [host, setHost] = useState({});
 
   useEffect(() => {
     const getHostData = async () => {
@@ -34,7 +34,7 @@ const ListingPage = () => {
         }
         const data = await response.json();
 
-        host = data;
+        setHost(data);
       } catch (error) {
         console.error("Error fetching host data:", error);
         return null;
@@ -42,7 +42,7 @@ const ListingPage = () => {
     };
 
     getHostData();
-  }, []);
+  }, [listing?.hostId]);
 
   return (
     <div>
