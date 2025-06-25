@@ -4,7 +4,7 @@ import Button from "./Button";
 const NavTags = ({ setSearchParams }) => {
   return (
     <div className="flex align-items-center pb-4 border-b-2 border-gray-300/40">
-      <div className="flex space-x-2 lg:space-x-3 pr-2 sm:pr-4 border-r-2 sm:border-none border-gray-300/40 w-3/4 lg:w-1/3 xl:w-2/7">
+      <div className="flex space-x-2 lg:space-x-3 pr-2 sm:pr-4 sm:border-r-2 border-none border-gray-300/40 w-4/4 sm:w-3/4 lg:w-1/3 xl:w-2/7">
         <Button
           slot={"Price"}
           type={"dropdown"}
