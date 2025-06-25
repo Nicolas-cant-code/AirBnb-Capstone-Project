@@ -21,6 +21,11 @@ class UserRouter {
       GlobalMiddleware.checkError,
       UserController.login
     );
+    this.router.get(
+      "/get/host",
+      GlobalMiddleware.checkError,
+      UserController.getHost
+    );
   }
   postRoutes() {
     this.router.post(

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Nav from "../../Layout/Nav";
 import Footer from "../../Layout/Footer";
 import PaymentCard from "../../Layout/PaymentCard";
@@ -20,6 +20,29 @@ const ListingPage = () => {
 
   const location = useLocation();
   const listing = location.state?.listing || null;
+
+  let host = null;
+
+  useEffect(() => {
+    const getHostData = async () => {
+      try {
+        const response = await fetch(
+          `/api/user/get/host?host_id=${listing.hostId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch host data");
+        }
+        const data = await response.json();
+
+        host = data;
+      } catch (error) {
+        console.error("Error fetching host data:", error);
+        return null;
+      }
+    };
+
+    getHostData();
+  }, []);
 
   return (
     <div>
@@ -91,7 +114,7 @@ const ListingPage = () => {
             <div className="flex justify-between items-center pb-4 border-b-2 border-gray-300/40">
               <span>
                 <h2>
-                  Entire {listing.type} unit hosted by {user.username}
+                  Entire {listing.type} unit hosted by {host.username}
                 </h2>
                 <p className="text-gray-400">
                   {listing.bedrooms} - {listing.bedrooms * 2} guests •{" "}
@@ -233,7 +256,7 @@ const ListingPage = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="mb-0">Hosted by {user.username}</h3>
+                  <h3 className="mb-0">Hosted by {host.username}</h3>
                   <p className="text-gray-500">Joined September 2023</p>
                 </div>
               </div>
@@ -251,7 +274,7 @@ const ListingPage = () => {
               </div>
               <div className="flex flex-col gap-4 fw-semibold text-gray-400 mt-4">
                 <h4 className="fs-5 text-black">
-                  {user.username} is a Superhost
+                  {host.username} is a Superhost
                 </h4>
                 <p className="max-w-[45vw]">
                   Superhosts are experienced, highly rated hosts who are

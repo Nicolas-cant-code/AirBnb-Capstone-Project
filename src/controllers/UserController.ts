@@ -110,4 +110,23 @@ export class UserController {
       next(e);
     }
   }
+
+  static async getHost(req, res, next) {
+    const host_id = req.query.host_id;
+
+    if (!host_id) {
+      return res.status(400).json({ message: "Host ID is required" });
+    }
+
+    try {
+      const user = await User.findById(host_id);
+      if (!user) {
+        req.errorStatus = 404;
+        throw new Error("User not found");
+      }
+      res.send(user);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
